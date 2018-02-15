@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './core/auth-guard/auth-guard.service';
+import { PageNotFoundComponent } from './shared/page-not-found/page-not-found.component';
 
 const routes: Routes = [
   {
@@ -7,18 +9,19 @@ const routes: Routes = [
     redirectTo: 'home',
     pathMatch: 'full',
   },
-  // {
-  //   path: 'home',
-  //   component: HomeComponent
-  // },
-  // {
-  //   path: 'login',
-  //   component: LoginComponent
-  // },
-  // {
-  //   path: 'register',
-  //   component: RegisterComponent
-  // },
+  {
+    path: 'home',
+    loadChildren: 'app/home/home.module#HomeModule',
+    canActivate: [AuthGuard]
+  },
+  {
+    path: 'entry',
+    loadChildren: 'app/entry/entry.module#EntryModule'
+  },
+  {
+    path: '**',
+    component: PageNotFoundComponent
+  }
 ];
 
 @NgModule({

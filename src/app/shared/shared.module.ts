@@ -1,8 +1,9 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatCard } from '@angular/material';
+import { MatButtonModule, MatCardModule, MatFormFieldModule, MatIconModule, MatInputModule } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 
 /**
  * Shared module should only contain declarations and exports of components used in whole application. No service providers
@@ -11,13 +12,25 @@ import { RouterModule } from '@angular/router';
   imports: [
     CommonModule,
     FormsModule,
-    MatCard,
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
     ReactiveFormsModule,
     RouterModule,
   ],
-  declarations: [],
+  declarations: [
+    PageNotFoundComponent,
+  ],
   exports: [
-    MatCard
+    MatButtonModule,
+    MatCardModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    PageNotFoundComponent,
+    RouterModule,
   ]
 })
 export class SharedModule {
