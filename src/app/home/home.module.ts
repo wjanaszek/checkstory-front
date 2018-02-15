@@ -14,9 +14,6 @@ import { SharedModule } from '../shared/shared.module';
   declarations: [
     HomeComponent,
     StoryComponent
-  ],
-  exports: [
-    HomeRoutingModule
   ]
 })
 export class HomeModule { }

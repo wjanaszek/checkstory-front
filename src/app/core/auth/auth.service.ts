@@ -6,7 +6,11 @@ export class AuthService {
   constructor() { }
 
   isLoggedIn(): boolean {
-    return false;
+    if (localStorage.getItem('jwt-token')) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
 }
