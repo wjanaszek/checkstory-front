@@ -1,8 +1,12 @@
-<mat-card>
+<mat-card *ngIf="story">
   <mat-card-title>
-    {{ story.title }}
+    Story details
   </mat-card-title>
   <mat-card-content>
-
+    <cs-story-form
+      [editing]="editing"
+      [story]="story"
+      (formValueChange)="onFormValueChange($event)">
+    </cs-story-form>
   </mat-card-content>
 </mat-card>

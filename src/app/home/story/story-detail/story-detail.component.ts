@@ -4,6 +4,7 @@ import { getSelectedStory, State } from '../../store/home.store';
 import { Story } from '../../../shared/models/story.model';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
+import { StoryFormPayload } from '../../../shared/interfaces/story-form-payload.interface';
 
 @Component({
   selector: 'cs-story-detail',
@@ -30,6 +31,10 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  onFormValueChange(event: StoryFormPayload): void {
+
   }
 
 }
