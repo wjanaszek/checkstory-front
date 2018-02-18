@@ -14,6 +14,11 @@ export const StoryInitialState: StoryState = {
 export function storyReducer(state: StoryState = StoryInitialState, action): StoryState {
   switch (action.type) {
 
+    case StoryActions.types.createStorySuccess: {
+      const stories = [action.payload, ...state.storyList];
+      return {...state, storyList: stories};
+    }
+
     case StoryActions.types.loadStoryListSuccess: {
       return {...state, storyList: action.payload};
     }

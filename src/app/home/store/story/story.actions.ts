@@ -1,5 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Story } from '../../../shared/models/story.model';
+import { StoryFormPayload } from '../../../shared/interfaces/story-form-payload.interface';
 
 export namespace StoryActions {
   export const types = {
@@ -24,7 +25,7 @@ export namespace StoryActions {
   export class CreateStory implements Action {
     type = types.createStory;
 
-    constructor(public payload: any) {
+    constructor(public payload: StoryFormPayload) {
     }
   }
 

@@ -6,6 +6,7 @@ export const config = {
     checkLogin: environment.apiUrl + '/api/users/checkLogin',
     createUser: environment.apiUrl + '/api/users',
 
+    createStory: environment.apiUrl + '/api/stories',
     loadStoryList: environment.apiUrl + '/api/stories',
     loadPhotoList: environment.apiUrl + '/api/stories/:storyNumber/photos',
 

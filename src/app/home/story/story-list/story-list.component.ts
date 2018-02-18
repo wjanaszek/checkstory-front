@@ -45,7 +45,7 @@ export class StoryListComponent implements OnInit, OnDestroy {
         takeUntil(this.ngUnsubscribe)
       )
       .subscribe(data => {
-        console.log('data from dialog: ' + JSON.stringify(data));
+        this.store.dispatch(new StoryActions.CreateStory(data));
       });
   }
 
