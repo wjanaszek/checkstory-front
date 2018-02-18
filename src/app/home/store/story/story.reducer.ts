@@ -1,8 +1,9 @@
 import { StoryActions } from './story.actions';
+import { Story } from '../../../shared/models/story.model';
 
 export interface StoryState {
   selectedStory: any;
-  storyList: any[];
+  storyList: Story[];
 }
 
 export const StoryInitialState: StoryState = {
@@ -13,11 +14,11 @@ export const StoryInitialState: StoryState = {
 export function storyReducer(state: StoryState = StoryInitialState, action): StoryState {
   switch (action.type) {
 
-    case StoryActions.LoadStoryListSuccess: {
+    case StoryActions.types.loadStoryListSuccess: {
       return {...state, storyList: action.payload};
     }
 
-    case StoryActions.SelectStory: {
+    case StoryActions.types.selectStory: {
       return {...state, selectedStory: action.payload};
     }
 

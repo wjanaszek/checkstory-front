@@ -5,6 +5,7 @@ import { StoryDetailComponent } from './story-detail/story-detail.component';
 import { StoryRoutingModule } from './story-routing.module';
 import { StoryListComponent } from './story-list/story-list.component';
 import { SharedModule } from '../../shared/shared.module';
+import { StoryDialogComponent } from './story-dialog/story-dialog.component';
 
 @NgModule({
   imports: [
@@ -15,7 +16,11 @@ import { SharedModule } from '../../shared/shared.module';
   declarations: [
     StoryComponent,
     StoryDetailComponent,
-    StoryListComponent
+    StoryListComponent,
+    StoryDialogComponent
+  ],
+  entryComponents: [
+    StoryDialogComponent
   ]
 })
 export class StoryModule { }

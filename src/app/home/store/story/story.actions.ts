@@ -1,12 +1,14 @@
 import { Action } from '@ngrx/store';
 import { Story } from '../../../shared/models/story.model';
-import { Photo } from '../../../shared/models/photo.model';
 
 export namespace StoryActions {
   export const types = {
     createStory: '[Story] Create Story',
     createStoryFail: '[Story] Create Story Fail',
     createStorySuccess: '[Story] Create Story Success',
+    deleteStory: '[Story] Delete Story',
+    deleteStoryFail: '[Story] Delete Story Fail',
+    deleteStorySuccess: '[Story] Delete Story Success',
     loadStoryList: '[Story] Load Story List',
     loadStoryListFail: '[Story] Load Story List Fail',
     loadStoryListSuccess: '[Story] Load Story List Success',
@@ -15,6 +17,30 @@ export namespace StoryActions {
     updateStoryFail: '[Story] Update Story Fail',
     updateStorySuccess: '[Story] Update Story Success',
   };
+
+  /**
+   * Create story actions
+   */
+  export class CreateStory implements Action {
+    type = types.createStory;
+
+    constructor(public payload: any) {
+    }
+  }
+
+  export class CreateStoryFail implements Action {
+    type = types.createStoryFail;
+
+    constructor(public payload: any) {
+    }
+  }
+
+  export class CreateStorySuccess implements Action {
+    type = types.createStorySuccess;
+
+    constructor(public payload: Story) {
+    }
+  }
 
   /**
    * Load story list actions

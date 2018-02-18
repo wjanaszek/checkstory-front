@@ -10,5 +10,8 @@ export const config = {
     loadPhotoList: environment.apiUrl + '/api/stories/:storyNumber/photos',
 
     login: environment.apiUrl + '/login',
-  }
+  },
+
+  WarsawLatitude: 52.2297700,
+  WarsawLongitude: 21.0117800
 };

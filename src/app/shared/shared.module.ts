@@ -16,12 +16,17 @@ import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
 import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { MapComponent } from './map/map.component';
+import { AgmCoreModule } from '@agm/core';
 
 /**
  * Shared module should only contain declarations and exports of components used in whole application. No service providers
  */
 @NgModule({
   imports: [
+    AgmCoreModule.forRoot({
+      apiKey: 'AIzaSyBJDewrUuhZjOZ4uA-9LZ87ldZUWFHRtP0'
+    }),
     CommonModule,
     FormsModule,
     MatButtonModule,
@@ -44,6 +49,7 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     PageNotFoundComponent,
     ToolbarComponent,
     ConfirmDialogComponent,
+    MapComponent,
   ],
   exports: [
     FormsModule,
@@ -63,7 +69,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     PageNotFoundComponent,
     ReactiveFormsModule,
     RouterModule,
-    ToolbarComponent
+    ToolbarComponent,
+    MapComponent,
   ],
   entryComponents: [
     ConfirmDialogComponent

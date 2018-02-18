@@ -34,21 +34,23 @@ export class StoryEffects {
       switchMap(() => {
         return this.http.get(config.endpoints.loadStoryList)
           .pipe(
-            map((res: any[]) => new StoryActions.LoadStoryListSuccess(res.map(data => {
-              return Story.deserialize(data);
-            }))),
+            map((res: any[]) => {
+              return new StoryActions.LoadStoryListSuccess(res.map(data => {
+                return Story.deserialize(data);
+              }));
+            }),
             catchError((err: HttpErrorResponse) => of(new StoryActions.LoadStoryListFail(err)))
           );
       })
     );
 
-  @Effect()
-  selectStory$: Observable<Action> = this.actions$
-    .ofType(StoryActions.types.selectStory)
-    .pipe(
-      map((action: StoryActions.SelectStory) => action.payload),
-      switchMap((payload: Story) => of(new StoryActions.LoadPhotoList(payload)))
-    );
+  // @Effect()
+  // selectStory$: Observable<Action> = this.actions$
+  //   .ofType(StoryActions.types.selectStory)
+  //   .pipe(
+  //     map((action: StoryActions.SelectStory) => action.payload),
+  //     switchMap((payload: Story) => of(new StoryActions.LoadPhotoList(payload)))
+  //   );
 
   constructor(private actions$: Actions, private http: HttpClient) {
   }

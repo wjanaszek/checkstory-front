@@ -1,16 +1,22 @@
 import { Injectable } from '@angular/core';
+import { tokenNotExpired } from 'angular2-jwt';
 
 @Injectable()
 export class AuthService {
 
-  constructor() { }
+  constructor() {
+  }
 
   isLoggedIn(): boolean {
-    if (localStorage.getItem('jwt-token')) {
+    if (this.getToken() && tokenNotExpired(null, this.getToken())) {
       return true;
     } else {
       return false;
     }
+  }
+
+  getToken(): string {
+    return localStorage.getItem('jwt-token');
   }
 
 }
