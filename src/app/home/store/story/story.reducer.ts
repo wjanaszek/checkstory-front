@@ -36,6 +36,21 @@ export function storyReducer(state: StoryState = StoryInitialState, action): Sto
       return {...state, selectedStory: action.payload};
     }
 
+    case StoryActions.types.updateStorySuccess: {
+      const stories = state.storyList.map(story => {
+        if (story.id === action.payload.id) {
+          return action.payload;
+        } else {
+          return story;
+        }
+      });
+      if (state.selectedStory.id === action.payload.id) {
+        return {...state, storyList: stories, selectedStory: action.payload};
+      } else {
+        return {...state, storyList: stories};
+      }
+    }
+
     default: {
       return state;
     }

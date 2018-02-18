@@ -100,4 +100,28 @@ export namespace StoryActions {
     constructor(public payload: Story) {
     }
   }
+
+  /**
+   * Update story actions
+   */
+  export class UpdateStory implements Action {
+    type = types.updateStory;
+
+    constructor(public payload: Story) {
+    }
+  }
+
+  export class UpdateStoryFail implements Action {
+    type = types.updateStoryFail;
+
+    constructor(public payload: any) {
+    }
+  }
+
+  export class UpdateStorySuccess implements Action {
+    type = types.updateStorySuccess;
+
+    constructor(public payload: Story) {
+    }
+  }
 }

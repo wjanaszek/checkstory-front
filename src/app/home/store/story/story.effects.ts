@@ -81,6 +81,22 @@ export class StoryEffects {
   //     switchMap((payload: Story) => of(new StoryActions.LoadPhotoList(payload)))
   //   );
 
+  @Effect()
+  updateStory$: Observable<Action> = this.actions$
+    .ofType(StoryActions.types.updateStory)
+    .pipe(
+      map((action: StoryActions.UpdateStory) => action.payload),
+      switchMap((payload: Story) => {
+        return this.http.put(config.endpoints.updateStory.replace(':storyNumber', `${payload.id}`), payload)
+          .pipe(
+            map((res: any) => {
+              return new StoryActions.UpdateStorySuccess(Story.deserialize(res));
+            }),
+            catchError((err: HttpErrorResponse) => of(new StoryActions.UpdateStoryFail(err)))
+          );
+      })
+    );
+
   constructor(private actions$: Actions, private http: HttpClient) {
   }
 

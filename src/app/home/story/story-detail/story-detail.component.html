@@ -1,6 +1,9 @@
 <mat-card *ngIf="story">
   <mat-card-title>
-    Story details
+    <span>Story details</span><span *ngIf="editing" class="editing-mode"> - editing</span>
+    <div class="edit-btn">
+      <button mat-raised-button (click)="toggleEdit()">EDIT</button>
+    </div>
   </mat-card-title>
   <mat-card-content>
     <cs-story-form

@@ -5,6 +5,7 @@ import { Story } from '../../../shared/models/story.model';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
 import { StoryFormPayload } from '../../../shared/interfaces/story-form-payload.interface';
+import { StoryActions } from '../../store/story/story.actions';
 
 @Component({
   selector: 'cs-story-detail',
@@ -13,7 +14,7 @@ import { StoryFormPayload } from '../../../shared/interfaces/story-form-payload.
 })
 export class StoryDetailComponent implements OnInit, OnDestroy {
 
-  editing: boolean;
+  editing = false;
   story: Story;
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
@@ -34,7 +35,11 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
   }
 
   onFormValueChange(event: StoryFormPayload): void {
+    this.store.dispatch(new StoryActions.UpdateStory({...this.story, ...event}));
+  }
 
+  toggleEdit(): void {
+    this.editing = !this.editing;
   }
 
 }
