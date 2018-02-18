@@ -4,6 +4,7 @@ import { ValidationService } from '../validation/validation.service';
 import { EntryState } from '../store/entry/entry.reducer';
 import { Store } from '@ngrx/store';
 import { EntryActions } from '../store/entry/entry.actions';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'cs-register',
@@ -14,7 +15,7 @@ export class RegisterComponent implements OnInit {
 
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private store: Store<EntryState>, private validation: ValidationService) { }
+  constructor(private fb: FormBuilder, private router: Router, private store: Store<EntryState>, private validation: ValidationService) { }
 
   ngOnInit(): void {
     // this.form = this.fb.group({
@@ -33,6 +34,10 @@ export class RegisterComponent implements OnInit {
     }, {
       validator: this.validation.checkPasswords.bind(this)
     });
+  }
+
+  cancel(): void {
+    this.router.navigateByUrl('entry');
   }
 
   submit(): void {

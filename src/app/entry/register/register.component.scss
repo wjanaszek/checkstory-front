@@ -1,0 +1,20 @@
+.register-page__card {
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-width: 700px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+button {
+  float: right;
+}
+
+mat-card {
+  min-width: 450px;
+}
