@@ -1,6 +1,8 @@
 <mat-toolbar color="primary">
   <mat-toolbar-row>
-    <span>CheckStory</span>
+    <a [routerLink]="['/home']" class="link">
+      <span>CheckStory</span>
+    </a>
     <span class="spacer"></span>
     <button mat-icon-button [matMenuTriggerFor]="menu">
       <mat-icon>account_circle</mat-icon>
