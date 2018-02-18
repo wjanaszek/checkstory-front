@@ -2,8 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { EntryState, getLoginError } from '../store/entry.reducer';
-import { EntryActions } from '../store/entry.actions';
+import { EntryState } from '../store/entry/entry.reducer';
+import { EntryActions } from '../store/entry/entry.actions';
+import { getLoginError } from '../store/entry.store';
 
 @Component({
   selector: 'cs-login',

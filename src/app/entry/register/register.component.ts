@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ValidationService } from '../validation/validation.service';
-import { EntryState } from '../store/entry.reducer';
+import { EntryState } from '../store/entry/entry.reducer';
 import { Store } from '@ngrx/store';
-import { EntryActions } from '../store/entry.actions';
+import { EntryActions } from '../store/entry/entry.actions';
 
 @Component({
   selector: 'cs-register',

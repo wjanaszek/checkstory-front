@@ -8,9 +8,9 @@ import { SharedModule } from '../shared/shared.module';
 import { OverviewComponent } from './overview/overview.component';
 import { ValidationService } from './validation/validation.service';
 import { StoreModule } from '@ngrx/store';
-import { entryReducer } from './store/entry.reducer';
+import { entryReducer } from './store/entry/entry.reducer';
 import { EffectsModule } from '@ngrx/effects';
-import { EntryEffects } from './store/entry.effects';
+import { EntryEffects } from './store/entry/entry.effects';
 
 @NgModule({
   imports: [

@@ -1,5 +1,3 @@
-import { createFeatureSelector, createSelector } from '@ngrx/store';
-import * as fromRoot from '../../store/app.reducer';
 import { EntryActions } from './entry.actions';
 
 export interface EntryState {
@@ -42,19 +40,3 @@ export function entryReducer(state: EntryState = initialState, action: any): Ent
     }
   }
 }
-
-export interface State extends fromRoot.State {
-  entry: EntryState;
-}
-
-export const getEntryState = createFeatureSelector<EntryState>('entry');
-
-export const getLoginError = createSelector(
-  getEntryState,
-  state => state.loginError
-);
-
-export const getRegisterError = createSelector(
-  getEntryState,
-  state => state.registerError
-);

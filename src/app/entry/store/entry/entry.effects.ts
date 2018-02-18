@@ -1,18 +1,17 @@
 import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Action } from '@ngrx/store';
 import { EntryActions } from './entry.actions';
 import { catchError, map, switchMap } from 'rxjs/operators';
-import { config } from '../../config';
+import { config } from '../../../config';
 import { of } from 'rxjs/observable/of';
 import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 import { Md5 } from 'ts-md5/dist/md5';
 import LoginPayload = EntryActions.LoginPayload;
 import RegisterPayload = EntryActions.RegisterPayload;
-import { ErrorResponse } from '../../shared/models/error-response.model';
 
 @Injectable()
 export class EntryEffects {
@@ -24,10 +23,10 @@ export class EntryEffects {
       map((action: EntryActions.Login) => action.payload),
       switchMap((payload: LoginPayload) => {
         const loginPayload = {...payload, password: Md5.hashStr(payload.password)};
-        return this.http.post(config.endpoints.login, loginPayload, { observe: 'response' })
+        return this.http.post(config.endpoints.login, loginPayload, {observe: 'response'})
           .pipe(
             map((res: any) => new EntryActions.LoginSuccess(res)),
-            catchError((err: ErrorResponse) => of(new EntryActions.LoginFail(err)))
+            catchError((err: HttpErrorResponse) => of(new EntryActions.LoginFail(err)))
           );
       })
     );
@@ -54,7 +53,7 @@ export class EntryEffects {
         return this.http.post(config.endpoints.createUser, registerPayload)
           .pipe(
             map(res => new EntryActions.RegisterSuccess()),
-            catchError(err => of(new EntryActions.RegisterFail(err)))
+            catchError((err: HttpErrorResponse) => of(new EntryActions.RegisterFail(err)))
           );
       })
     );
