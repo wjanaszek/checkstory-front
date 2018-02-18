@@ -3,11 +3,13 @@ import { RouterModule, Routes } from '@angular/router';
 import { StoryComponent } from './story.component';
 import { StoryListComponent } from './story-list/story-list.component';
 import { StoryDetailComponent } from './story-detail/story-detail.component';
+import { StoryGuard } from './story-guard/story.guard';
 
 const routes: Routes = [
   {
     path: '',
     component: StoryComponent,
+    canActivate: [StoryGuard],
     children: [
       {
         path: 'overview',

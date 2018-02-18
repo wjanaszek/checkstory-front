@@ -27,8 +27,6 @@ export class StoryListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // @TODO move this to guard
-    this.store.dispatch(new StoryActions.LoadStoryList());
     this.stories = this.store.select(getStoryList);
   }
 

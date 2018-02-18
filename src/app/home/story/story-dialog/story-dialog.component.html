@@ -1,46 +1,11 @@
 <h2 mat-dialog-title>ADD STORY</h2>
 <mat-dialog-content class="dialog">
-  <form [formGroup]="form" class="col-md-10">
-    <mat-form-field class="field-wide">
-      <input matInput
-             formControlName="title"
-             placeholder="Title">
-      <mat-hint>
-        <mat-error *ngIf="form.get('title').hasError('required') && form.get('title').touched">
-          Title is required
-        </mat-error>
-      </mat-hint>
-    </mat-form-field>
-    <mat-form-field class="field-wide">
-      <textarea matInput
-                formControlName="notes"
-                placeholder="Notes"
-                matTextareaAutosize
-                matAutosizeMinRows="2"
-                matAutosizeMaxRows="5">
-      </textarea>
-    </mat-form-field>
-    <mat-form-field class="field-wide">
-      <input matInput
-             formControlName="createDate"
-             [matDatepicker]="datePicker"
-             placeholder="Create date">
-      <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
-      <mat-datepicker #datePicker></mat-datepicker>
-      <mat-hint>
-        <mat-error *ngIf="form.get('createDate').hasError('required') && form.get('createDate').touched">
-          Create date is required
-        </mat-error>
-      </mat-hint>
-    </mat-form-field>
-    <cs-map [latitude]="defaultPosition.lat"
-            [longitude]="defaultPosition.lng"
-            [markerDraggable]="true"
-            (locationChange)="onLocationChange($event)">
-    </cs-map>
-  </form>
+  <cs-story-form
+    [editing]="true"
+    (formValueChange)="onFormValueChange($event)">
+  </cs-story-form>
 </mat-dialog-content>
 <mat-dialog-actions>
   <button mat-button mat-dialog-close>CANCEL</button>
-  <button mat-button (click)="submit()" [disabled]="form.invalid">ADD STORY</button>
+  <button mat-button (click)="submit()" [disabled]="!formValue">ADD STORY</button>
 </mat-dialog-actions>

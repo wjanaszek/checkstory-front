@@ -1,8 +1,6 @@
 import { Component, Inject, OnInit } from '@angular/core';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { config } from '../../../config';
-import { LocationPayload } from '../../../shared/interfaces/location-payload.interface';
+import { StoryFormPayload } from '../../../shared/interfaces/story-form-payload.interface';
 
 @Component({
   selector: 'cs-story-dialog',
@@ -11,34 +9,20 @@ import { LocationPayload } from '../../../shared/interfaces/location-payload.int
 })
 export class StoryDialogComponent implements OnInit {
 
-  defaultPosition = { lat: config.WarsawLatitude, lng: config.WarsawLongitude };
-  form: FormGroup;
+  formValue: StoryFormPayload;
 
   constructor(public dialogRef: MatDialogRef<StoryDialogComponent>,
-              @Inject(MAT_DIALOG_DATA) public data: any, private fb: FormBuilder) { }
-
-  ngOnInit(): void {
-    this.form = this.fb.group({
-      title: ['', Validators.required],
-      notes: [''],
-      latitude: [this.defaultPosition.lat, Validators.required],
-      longitude: [this.defaultPosition.lng, Validators.required],
-      createDate: [new Date(), Validators.required]
-    });
+              @Inject(MAT_DIALOG_DATA) public data: any) {
   }
 
-  onLocationChange(event: LocationPayload): void {
-    Object.keys(event).forEach(key => {
-      this.form.get(key).setValue(event[key]);
-    });
+  ngOnInit(): void {
+  }
+
+  onFormValueChange(event: StoryFormPayload): void {
+    this.formValue = event;
   }
 
   submit(): void {
-    if (this.form.invalid) {
-      this.form.markAsDirty();
-      return;
-    }
-
-    this.dialogRef.close(this.form.value);
+    this.dialogRef.close(this.formValue);
   }
 }
