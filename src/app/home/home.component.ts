@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'cs-home',
@@ -8,15 +7,10 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private router: Router) { }
-
-  ngOnInit(): void {
+  constructor() {
   }
 
-  // @TODO move this somewhere
-  logout(): void {
-    localStorage.removeItem('jwt-token');
-    this.router.navigateByUrl('entry');
+  ngOnInit(): void {
   }
 
 }
