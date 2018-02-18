@@ -2,13 +2,16 @@ import { Injectable } from '@angular/core';
 import { Actions, Effect } from '@ngrx/effects';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
-import { Action } from '@ngrx/store';
+import { Action, Store } from '@ngrx/store';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { Story } from '../../../shared/models/story.model';
 import { config } from '../../../config';
 import { of } from 'rxjs/observable/of';
 import { StoryActions } from './story.actions';
 import { StoryFormPayload } from '../../../shared/interfaces/story-form-payload.interface';
+import { State } from '../home.store';
+import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
+import { PhotosActions } from '../photos/photos.actions';
 
 @Injectable()
 export class StoryEffects {
@@ -73,13 +76,16 @@ export class StoryEffects {
       })
     );
 
-  // @Effect()
-  // selectStory$: Observable<Action> = this.actions$
-  //   .ofType(StoryActions.types.selectStory)
-  //   .pipe(
-  //     map((action: StoryActions.SelectStory) => action.payload),
-  //     switchMap((payload: Story) => of(new StoryActions.LoadPhotoList(payload)))
-  //   );
+  @Effect()
+  selectStory$: Observable<Action> = this.actions$
+    .ofType(StoryActions.types.selectStory)
+    .pipe(
+      map((action: StoryActions.SelectStory) => action.payload),
+      switchMap((payload: Story) => {
+        this.store.dispatch(new PhotosActions.LoadPhotoList(payload));
+        return new EmptyObservable();
+      })
+    );
 
   @Effect()
   updateStory$: Observable<Action> = this.actions$
@@ -97,7 +103,7 @@ export class StoryEffects {
       })
     );
 
-  constructor(private actions$: Actions, private http: HttpClient) {
+  constructor(private actions$: Actions, private http: HttpClient, private store: Store<State>) {
   }
 
 }

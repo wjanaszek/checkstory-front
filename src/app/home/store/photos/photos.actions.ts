@@ -43,7 +43,7 @@ export namespace PhotosActions {
   export class LoadPhotoListSuccess implements Action {
     type = types.loadPhotoListSuccess;
 
-    constructor(public payload: LoadPhotoListPayload) {
+    constructor(public payload: Photo[]) {
     }
   }
 }

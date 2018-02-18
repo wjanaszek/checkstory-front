@@ -9,6 +9,7 @@ import { StoryDialogComponent } from './story-dialog/story-dialog.component';
 import { StoryGuard } from './story-guard/story.guard';
 import { StoryFormComponent } from './story-form/story-form.component';
 import { StoryDetailGuard } from './story-detail-guard/story-detail.guard';
+import { PhotoListComponent } from './photo-list/photo-list.component';
 
 @NgModule({
   imports: [
@@ -17,11 +18,12 @@ import { StoryDetailGuard } from './story-detail-guard/story-detail.guard';
     SharedModule
   ],
   declarations: [
+    PhotoListComponent,
     StoryComponent,
     StoryDetailComponent,
     StoryListComponent,
     StoryDialogComponent,
-    StoryFormComponent
+    StoryFormComponent,
   ],
   entryComponents: [
     StoryDialogComponent

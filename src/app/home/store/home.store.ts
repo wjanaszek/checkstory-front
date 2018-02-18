@@ -20,6 +20,24 @@ export const reducers: ActionReducerMap<State> = {
 export const getHomeState = createFeatureSelector<State>('home');
 
 /**
+ * Photo selectors
+ */
+export const getPhotosState = createSelector(
+  getHomeState,
+  state => state.photosState
+);
+
+export const getPhotoList = createSelector(
+  getPhotosState,
+  state => state.photos
+);
+
+export const getPhotosLoading = createSelector(
+  getPhotosState,
+  state => state.photosLoading
+);
+
+/**
  * Story selectors
  */
 export const getStoryState = createSelector(

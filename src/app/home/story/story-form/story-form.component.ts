@@ -6,11 +6,20 @@ import { LocationPayload } from '../../../shared/interfaces/location-payload.int
 import { Subject } from 'rxjs/Subject';
 import { debounceTime, distinctUntilChanged, skipWhile, takeUntil } from 'rxjs/operators';
 import { StoryFormPayload } from '../../../shared/interfaces/story-form-payload.interface';
+import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material';
+import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
+
+import * as _moment from 'moment';
+const moment = _moment;
 
 @Component({
   selector: 'cs-story-form',
   templateUrl: './story-form.component.html',
-  styleUrls: ['./story-form.component.scss']
+  styleUrls: ['./story-form.component.scss'],
+  providers: [
+    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+  ]
 })
 export class StoryFormComponent implements OnInit, OnDestroy {
 
@@ -46,7 +55,9 @@ export class StoryFormComponent implements OnInit, OnDestroy {
         skipWhile(() => this.form.invalid),
         takeUntil(this.ngUnsubscribe)
       )
-      .subscribe(data => this.formValueChange.emit(data));
+      .subscribe(data => {
+        this.formValueChange.emit(data);
+      });
   }
 
   ngOnDestroy(): void {

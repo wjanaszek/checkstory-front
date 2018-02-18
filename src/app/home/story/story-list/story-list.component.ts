@@ -18,8 +18,8 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
 })
 export class StoryListComponent implements OnInit, OnDestroy {
 
-  stories: Observable<Story[]>;
   menuStory: Story;
+  stories: Observable<Story[]>;
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
