@@ -1,15 +1,19 @@
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
 import { StoryInitialState, storyReducer, StoryState } from './story/story.reducer';
+import { PhotosInitialState, photosReducer, PhotosState } from './photos/photos.reducer';
 
 export interface State {
+  photosState: PhotosState;
   storyState: StoryState;
 }
 
 const initialState: State = {
+  photosState: PhotosInitialState,
   storyState: StoryInitialState
 };
 
 export const reducers: ActionReducerMap<State> = {
+  photosState: photosReducer,
   storyState: storyReducer,
 };
 
