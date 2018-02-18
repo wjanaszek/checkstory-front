@@ -8,12 +8,12 @@ import {
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatTooltipModule
+  MatListModule,
+  MatTooltipModule,
 } from '@angular/material';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { HttpClientModule } from '@angular/common/http';
 
 /**
  * Shared module should only contain declarations and exports of components used in whole application. No service providers
@@ -22,7 +22,6 @@ import { HttpClientModule } from '@angular/common/http';
   imports: [
     CommonModule,
     FormsModule,
-    HttpClientModule,
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
@@ -30,6 +29,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatListModule,
     MatTooltipModule,
     ReactiveFormsModule,
     RouterModule,
@@ -39,7 +39,6 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   exports: [
     FormsModule,
-    HttpClientModule,
     MatButtonModule,
     MatCardModule,
     MatDialogModule,
@@ -47,6 +46,7 @@ import { HttpClientModule } from '@angular/common/http';
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatListModule,
     MatTooltipModule,
     PageNotFoundComponent,
     ReactiveFormsModule,

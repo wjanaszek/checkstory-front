@@ -5,16 +5,19 @@ import { HomeComponent } from './home.component';
 const routes: Routes = [
   {
     path: '',
-    component: HomeComponent
+    component: HomeComponent,
+    children: [
+      {
+        path: 'story',
+        loadChildren: 'app/home/story/story.module#StoryModule'
+      },
+      {
+        path: '',
+        redirectTo: 'story',
+        pathMatch: 'full'
+      }
+    ]
   },
-  // {
-  //   path: 'login',
-  //   component: LoginComponent
-  // },
-  // {
-  //   path: 'register',
-  //   component: RegisterComponent
-  // },
 ];
 
 @NgModule({
