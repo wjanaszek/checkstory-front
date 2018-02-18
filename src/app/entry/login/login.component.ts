@@ -5,6 +5,7 @@ import { Store } from '@ngrx/store';
 import { EntryState } from '../store/entry/entry.reducer';
 import { EntryActions } from '../store/entry/entry.actions';
 import { getLoginError } from '../store/entry.store';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'cs-login',
@@ -16,7 +17,7 @@ export class LoginComponent implements OnInit {
   apiError: Observable<string>;
   form: FormGroup;
 
-  constructor(private fb: FormBuilder, private store: Store<EntryState>) { }
+  constructor(private fb: FormBuilder, private router: Router, private store: Store<EntryState>) { }
 
   ngOnInit(): void {
     this.form = this.fb.group({
@@ -25,6 +26,10 @@ export class LoginComponent implements OnInit {
     });
 
     this.apiError = this.store.select(getLoginError);
+  }
+
+  cancel(): void {
+    this.router.navigateByUrl('entry');
   }
 
   submit(): void {
