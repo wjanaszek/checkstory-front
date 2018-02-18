@@ -12,7 +12,6 @@ export class Story {
   static deserialize(data: any): Story {
     const story = new Story();
     Object.keys(data).forEach(key => {
-      console.log('key = ' + key + ', ' + data[key]);
       story[key] = data[key];
     });
     return story;
