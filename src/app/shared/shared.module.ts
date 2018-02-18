@@ -2,15 +2,19 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import {
   MatButtonModule,
-  MatCardModule, MatDatepickerModule,
+  MatCardModule,
+  MatDatepickerModule,
   MatDialogModule,
   MatDividerModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
-  MatListModule, MatMenuModule, MatNativeDateModule, MatToolbarModule,
+  MatListModule,
+  MatMenuModule,
+  MatToolbarModule,
   MatTooltipModule,
 } from '@angular/material';
+import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
@@ -39,7 +43,7 @@ import { AgmCoreModule } from '@agm/core';
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
     MatToolbarModule,
     MatTooltipModule,
     ReactiveFormsModule,
@@ -63,7 +67,7 @@ import { AgmCoreModule } from '@agm/core';
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatNativeDateModule,
+    MatMomentDateModule,
     MatToolbarModule,
     MatTooltipModule,
     PageNotFoundComponent,

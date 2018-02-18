@@ -8,6 +8,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { StoryDialogComponent } from './story-dialog/story-dialog.component';
 import { StoryGuard } from './story-guard/story.guard';
 import { StoryFormComponent } from './story-form/story-form.component';
+import { StoryDetailGuard } from './story-detail-guard/story-detail.guard';
 
 @NgModule({
   imports: [
@@ -26,7 +27,8 @@ import { StoryFormComponent } from './story-form/story-form.component';
     StoryDialogComponent
   ],
   providers: [
-    StoryGuard
+    StoryDetailGuard,
+    StoryGuard,
   ]
 })
 export class StoryModule { }
