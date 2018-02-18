@@ -44,6 +44,30 @@ export namespace StoryActions {
   }
 
   /**
+   * Delete story actions
+   */
+  export class DeleteStory implements Action {
+    type = types.deleteStory;
+
+    constructor(public payload: Story) {
+    }
+  }
+
+  export class DeleteStoryFail implements Action {
+    type = types.deleteStoryFail;
+
+    constructor(public payload: any) {
+    }
+  }
+
+  export class DeleteStorySuccess implements Action {
+    type = types.deleteStorySuccess;
+
+    constructor(public payload: Story) {
+    }
+  }
+
+  /**
    * Load story list actions
    */
   export class LoadStoryList implements Action {

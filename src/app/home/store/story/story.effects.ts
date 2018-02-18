@@ -27,6 +27,20 @@ export class StoryEffects {
       })
     );
 
+  @Effect()
+  deleteStory$: Observable<Action> = this.actions$
+    .ofType(StoryActions.types.deleteStory)
+    .pipe(
+      map((action: StoryActions.DeleteStory) => action.payload),
+      switchMap((payload: Story) => {
+        return this.http.delete(config.endpoints.deleteStory.replace(':storyNumber', `${payload.id}`))
+          .pipe(
+            map((res: any) => new StoryActions.DeleteStorySuccess(payload)),
+            catchError((err: HttpErrorResponse) => of(new StoryActions.DeleteStoryFail(err)))
+          );
+      })
+    );
+
   // @TODO move this to photos effects
   // @Effect()
   // loadPhotoList$: Observable<Action> = this.actions$

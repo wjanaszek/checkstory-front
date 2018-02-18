@@ -64,7 +64,7 @@ export class StoryListComponent implements OnInit, OnDestroy {
       )
       .subscribe(data => {
         if (data) {
-          // dispatch action to store
+          this.store.dispatch(new StoryActions.DeleteStory(story));
         }
       });
   }
