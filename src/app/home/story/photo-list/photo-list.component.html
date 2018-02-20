@@ -7,7 +7,7 @@
 <ng-container *ngIf="photos">
   <mat-list>
     <mat-list-item *ngFor="let photo of photos" style="height: 200px;">
-      <img [src]="'data:image/' + photo.imageType + ';base64,' + photo.content" height="150px">
+      <img [src]="'data:image/' + photo.imageType + ';base64,' + photo.content" height="150px" (click)="openPreview(photo)">
       <button mat-icon-button [matMenuTriggerFor]="menu" (click)="menuButtonClicked(photo, $event)">
         <mat-icon>more_vert</mat-icon>
       </button>

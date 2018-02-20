@@ -9,7 +9,6 @@ import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 })
 export class PhotoDialogComponent implements OnInit {
 
-  creatingNew: boolean;
   photo: Photo;
   title: string;
 

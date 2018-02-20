@@ -11,6 +11,7 @@ import { StoryFormComponent } from './story-form/story-form.component';
 import { StoryDetailGuard } from './story-detail-guard/story-detail.guard';
 import { PhotoListComponent } from './photo-list/photo-list.component';
 import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
+import { PhotoPreviewComponent } from './photo-preview/photo-preview.component';
 
 @NgModule({
   imports: [
@@ -26,9 +27,11 @@ import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
     StoryListComponent,
     StoryDialogComponent,
     StoryFormComponent,
+    PhotoPreviewComponent,
   ],
   entryComponents: [
     PhotoDialogComponent,
+    PhotoPreviewComponent,
     StoryDialogComponent
   ],
   providers: [

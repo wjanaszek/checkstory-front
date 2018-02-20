@@ -1,10 +1,12 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { Photo } from '../../../shared/models/photo.model';
 import { MatDialog } from '@angular/material';
 import { PhotoDialogComponent } from '../photo-dialog/photo-dialog.component';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
+import { NgxGalleryComponent, NgxGalleryImage, NgxGalleryOptions } from 'ngx-gallery';
+import { PhotoPreviewComponent } from '../photo-preview/photo-preview.component';
 
 @Component({
   selector: 'cs-photo-list',
@@ -14,7 +16,11 @@ import { Observable } from 'rxjs/Observable';
 export class PhotoListComponent implements OnInit, OnDestroy {
 
   @Input()
-  photos: Photo[];
+  set photos(photos: Photo[]) {
+    if (photos && photos.length) {
+      this._photos = photos;
+    }
+  };
   @Input()
   photosLoading: boolean;
 
@@ -28,6 +34,7 @@ export class PhotoListComponent implements OnInit, OnDestroy {
   menuPhoto: Photo;
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private _photos: Photo[];
 
   constructor(private dialog: MatDialog) { }
 
@@ -89,6 +96,15 @@ export class PhotoListComponent implements OnInit, OnDestroy {
   }
 
   openPreview(photo: Photo): void {
+    this.dialog.open(PhotoPreviewComponent, {
+      data: {
+        photo: photo
+      }
+    });
+  }
+
+  get photos(): Photo[] {
+    return this._photos;
   }
 
 }
