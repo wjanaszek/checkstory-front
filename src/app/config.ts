@@ -12,6 +12,7 @@ export const config = {
     createStory: environment.apiUrl + '/api/stories',
     deleteStory: environment.apiUrl + '/api/stories/:storyNumber',
     loadStoryList: environment.apiUrl + '/api/stories',
+    loadSelectedStory: environment.apiUrl + '/api/stories/:storyNumber',
     updateStory: environment.apiUrl + '/api/stories/:storyNumber',
 
     // Photo

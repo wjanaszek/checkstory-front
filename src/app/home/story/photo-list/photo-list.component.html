@@ -1,10 +1,10 @@
+<button class="add-btn" mat-raised-button (click)="openAddPhotoDialog()">ADD PHOTO</button>
 <div class="loading-photos__overlay" *ngIf="photosLoading">
   <mat-progress-spinner mode="indeterminate" [diameter]="25">
   </mat-progress-spinner>
   <span>Loading photos...</span>
 </div>
 <ng-container *ngIf="photos">
-  <button class="add-btn" mat-raised-button (click)="openAddPhotoDialog()">ADD PHOTO</button>
   <mat-list>
     <mat-list-item *ngFor="let photo of photos" style="height: 200px;">
       <img [src]="'data:image/' + photo.imageType + ';base64,' + photo.content" height="150px">

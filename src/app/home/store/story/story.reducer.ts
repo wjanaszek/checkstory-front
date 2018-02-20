@@ -32,7 +32,7 @@ export function storyReducer(state: StoryState = StoryInitialState, action): Sto
       return {...state, storyList: action.payload};
     }
 
-    case StoryActions.types.selectStory: {
+    case StoryActions.types.loadSelectedStorySuccess: {
       return {...state, selectedStory: action.payload};
     }
 

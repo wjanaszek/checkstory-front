@@ -44,20 +44,31 @@ export class StoryEffects {
       })
     );
 
-  // @TODO move this to photos effects
-  // @Effect()
-  // loadPhotoList$: Observable<Action> = this.actions$
-  //   .ofType(StoryActions.types.loadPhotoList)
-  //   .pipe(
-  //     map((action: StoryActions.LoadPhotoList) => action.payload),
-  //     switchMap((payload: Story) => {
-  //       return this.http.get(config.endpoints.loadPhotoList.replace(':storyNumber', `${payload.id}`))
-  //         .pipe(
-  //           map((res: LoadPhotoListPayload) => new StoryActions.LoadPhotoListSuccess(res)),
-  //           catchError((err: HttpErrorResponse) => of(new StoryActions.LoadPhotoListFail(err)))
-  //         );
-  //     })
-  //   );
+  @Effect()
+  loadSelectedStory$: Observable<Action> = this.actions$
+    .ofType(StoryActions.types.loadSelectedStory)
+    .pipe(
+      map((action: StoryActions.LoadSelectedStory) => action.payload),
+      switchMap((payload: Story) => {
+        this.store.dispatch(new PhotosActions.ClearPhotoList());
+        return this.http.get(config.endpoints.loadSelectedStory.replace(':storyNumber', `${payload.id}`))
+          .pipe(
+            map((res: any) => new StoryActions.LoadSelectedStorySuccess(Story.deserialize(res))),
+            catchError((err: HttpErrorResponse) => of(new StoryActions.LoadSelectedStoryFail(err)))
+          );
+      })
+    );
+
+  @Effect()
+  loadSelectedStorySuccess$: Observable<Action> = this.actions$
+    .ofType(StoryActions.types.loadSelectedStorySuccess)
+    .pipe(
+      map((action: StoryActions.LoadSelectedStorySuccess) => action.payload),
+      switchMap((payload: Story) => {
+        this.store.dispatch(new PhotosActions.LoadPhotoList(payload));
+        return new EmptyObservable();
+      })
+    );
 
   @Effect()
   loadStoryList$: Observable<Action> = this.actions$
@@ -73,17 +84,6 @@ export class StoryEffects {
             }),
             catchError((err: HttpErrorResponse) => of(new StoryActions.LoadStoryListFail(err)))
           );
-      })
-    );
-
-  @Effect()
-  selectStory$: Observable<Action> = this.actions$
-    .ofType(StoryActions.types.selectStory)
-    .pipe(
-      map((action: StoryActions.SelectStory) => action.payload),
-      switchMap((payload: Story) => {
-        this.store.dispatch(new PhotosActions.LoadPhotoList(payload));
-        return new EmptyObservable();
       })
     );
 

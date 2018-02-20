@@ -70,14 +70,14 @@ export class StoryListComponent implements OnInit, OnDestroy {
   }
 
   details(story: Story): void {
-    this.store.dispatch(new StoryActions.SelectStory(story));
+    this.store.dispatch(new StoryActions.LoadSelectedStory(story));
     this.router.navigateByUrl('home/story/:id'.replace(':id', `${story.id}`));
   }
 
   edit(story: Story): void {
     // @TODO pass editing value with URL
-    this.store.dispatch(new StoryActions.SelectStory(story));
-    this.router.navigateByUrl('home/story/:id'.replace(':id', `${story.id}`));
+    this.store.dispatch(new StoryActions.LoadSelectedStory(story));
+    this.router.navigateByUrl('home/story/:id&edit'.replace(':id', `${story.id}`));
   }
 
   menuButtonClicked(story: Story, event): void {
