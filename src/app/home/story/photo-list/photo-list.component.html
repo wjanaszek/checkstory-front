@@ -1,7 +1,31 @@
+<div class="loading-photos__overlay" *ngIf="photosLoading">
+  <mat-progress-spinner mode="indeterminate" [diameter]="25">
+  </mat-progress-spinner>
+  <span>Loading photos...</span>
+</div>
 <ng-container *ngIf="photos">
+  <button class="add-btn" mat-raised-button (click)="openAddPhotoDialog()">ADD PHOTO</button>
   <mat-list>
     <mat-list-item *ngFor="let photo of photos" style="height: 200px;">
       <img [src]="'data:image/' + photo.imageType + ';base64,' + photo.content" height="150px">
+      <button mat-icon-button [matMenuTriggerFor]="menu" (click)="menuButtonClicked(photo, $event)">
+        <mat-icon>more_vert</mat-icon>
+      </button>
     </mat-list-item>
   </mat-list>
 </ng-container>
+
+<mat-menu #menu="matMenu" [overlapTrigger]="false">
+  <button mat-menu-item (click)="openEditPhotoDialog(menuPhoto)">
+    <mat-icon>build</mat-icon>
+    <span>UPLOAD NEW</span>
+  </button>
+  <button mat-menu-item (click)="openPreview(menuPhoto)">
+    <mat-icon>crop_original</mat-icon>
+    <span>PREVIEW</span>
+  </button>
+  <button mat-menu-item (click)="delete(menuPhoto)">
+    <mat-icon>delete</mat-icon>
+    <span>DELETE</span>
+  </button>
+</mat-menu>

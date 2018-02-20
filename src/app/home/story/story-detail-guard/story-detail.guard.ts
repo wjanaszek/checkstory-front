@@ -1,38 +1,34 @@
 import { Injectable } from '@angular/core';
-import { CanActivate, Router } from '@angular/router';
+import { ActivatedRouteSnapshot, CanActivate } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
 import { getStoryState, State } from '../../store/home.store';
-import { catchError, map, switchMap, take, delay } from 'rxjs/operators';
+import { catchError, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
+import { StoryActions } from '../../store/story/story.actions';
 
 @Injectable()
 export class StoryDetailGuard implements CanActivate {
 
-  constructor(private router: Router, private store: Store<State>) {
+  constructor(private store: Store<State>) {
   }
 
-  canActivate(): Observable<boolean> {
-    return this.checkSelectedStory()
+  canActivate(route: ActivatedRouteSnapshot): Observable<boolean> {
+    return this.loadSelectedStory(route)
       .pipe(
         switchMap(() => of(true)),
-        catchError(() => {
-          this.router.navigateByUrl('home');
-          return of(false);
-        })
+        catchError(() => of(false))
       );
   }
 
-  checkSelectedStory(): Observable<any> {
+  loadSelectedStory(route: ActivatedRouteSnapshot): Observable<any> {
     return this.store.select(getStoryState)
       .pipe(
-        delay(250),
-        map((data: any) => {
+        tap((data: any) => {
           if (!data.selectedStory) {
-            throw new Error();
+            this.store.dispatch(new StoryActions.SelectStory(route.params['id']));
           }
-        }),
-        take(1)
+        })
       );
   }
 }

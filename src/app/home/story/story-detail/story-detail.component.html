@@ -12,6 +12,7 @@
       (formValueChange)="onFormValueChange($event)">
     </cs-story-form>
     <cs-photo-list [photos]="(photos | async)"
+                   [photosLoading]="(photosLoading | async)"
                    (addPhoto)="onAddPhoto($event)"
                    (deletePhoto)="onDeletePhoto($event)"
                    (updatePhoto)="onUpdatePhoto($event)">

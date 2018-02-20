@@ -8,6 +8,9 @@ import { StoryFormPayload } from '../../../shared/interfaces/story-form-payload.
 import { StoryActions } from '../../store/story/story.actions';
 import { Observable } from 'rxjs/Observable';
 import { Photo } from '../../../shared/models/photo.model';
+import { PhotosActions } from '../../store/photos/photos.actions';
+import { MatDialog } from '@angular/material';
+import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'cs-story-detail',
@@ -23,7 +26,7 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
-  constructor(private store: Store<State>) { }
+  constructor(private dialog: MatDialog, private store: Store<State>) { }
 
   ngOnInit(): void {
     this.photos = this.store.select(getPhotoList);
@@ -41,10 +44,28 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  onAddPhoto(event): void {
+  onAddPhoto(photo: Photo): void {
+    this.store.dispatch(new PhotosActions.CreatePhoto({ photo: photo, story: this.story }));
   }
 
-  onDeletePhoto(event: Photo): void {
+  onDeletePhoto(photo: Photo): void {
+    const dialogRef = this.dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete photo',
+        message: 'Are you sure you want to delete this photo?',
+        confirmText: 'DELETE PHOTO'
+      }
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe(result => {
+        if (result) {
+          this.store.dispatch(new PhotosActions.DeletePhoto({ photo: photo, story: this.story }));
+        }
+      });
   }
 
   onFormValueChange(event: StoryFormPayload): void {

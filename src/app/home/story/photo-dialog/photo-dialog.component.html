@@ -1,0 +1,10 @@
+<h2 mat-dialog-title>{{ title }}</h2>
+<mat-dialog-content>
+  Browse:
+  <input mat-button type="file" accept=".jpg, .png, .jpeg" (change)="onFileChange($event)" #fileInput/>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button type="button" mat-button (click)="upload()">UPLOAD FILE</button>
+  <button type="button" mat-button (click)="clearFile()">REMOVE FILE</button>
+  <button mat-button mat-dialog-close>CANCEL</button>
+</mat-dialog-actions>

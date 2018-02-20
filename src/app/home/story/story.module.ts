@@ -10,6 +10,7 @@ import { StoryGuard } from './story-guard/story.guard';
 import { StoryFormComponent } from './story-form/story-form.component';
 import { StoryDetailGuard } from './story-detail-guard/story-detail.guard';
 import { PhotoListComponent } from './photo-list/photo-list.component';
+import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import { PhotoListComponent } from './photo-list/photo-list.component';
     SharedModule
   ],
   declarations: [
+    PhotoDialogComponent,
     PhotoListComponent,
     StoryComponent,
     StoryDetailComponent,
@@ -26,6 +28,7 @@ import { PhotoListComponent } from './photo-list/photo-list.component';
     StoryFormComponent,
   ],
   entryComponents: [
+    PhotoDialogComponent,
     StoryDialogComponent
   ],
   providers: [

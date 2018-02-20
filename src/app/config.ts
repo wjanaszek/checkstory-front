@@ -15,7 +15,10 @@ export const config = {
     updateStory: environment.apiUrl + '/api/stories/:storyNumber',
 
     // Photo
+    createPhoto: environment.apiUrl + '/api/stories/:storyNumber/photos',
+    deletePhoto: environment.apiUrl + '/api/stories/:storyNumber/photos/:photoNumber',
     loadPhotoList: environment.apiUrl + '/api/stories/:storyNumber/photos',
+    updatePhoto: environment.apiUrl + '/api/stories/:storyNumber/photos/:photoNumber',
 
     login: environment.apiUrl + '/login',
   },

@@ -4,6 +4,12 @@ export class Photo {
   createDate: any;
   content?: string;
   storyNumber: number;
+  originalPhoto: string;
+
+  // @TODO remove this column in API?
+  constructor() {
+    this.originalPhoto = 'f';
+  }
 
   static deserialize(data: any): Photo {
     const photo = new Photo();
