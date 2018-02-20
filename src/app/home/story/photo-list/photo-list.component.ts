@@ -8,6 +8,7 @@ import { Observable } from 'rxjs/Observable';
 import { NgxGalleryComponent, NgxGalleryImage, NgxGalleryOptions } from 'ngx-gallery';
 import { PhotoPreviewComponent } from '../photo-preview/photo-preview.component';
 import * as url from 'url';
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'cs-photo-list',
@@ -33,6 +34,8 @@ export class PhotoListComponent implements OnInit, OnDestroy {
   updatePhoto: EventEmitter<Photo> = new EventEmitter<Photo>();
 
   menuPhoto: Photo;
+  comparePhotos: boolean;
+  comparePhotosControl: FormControl;
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
   private _photos: Photo[];
@@ -40,6 +43,15 @@ export class PhotoListComponent implements OnInit, OnDestroy {
   constructor(private dialog: MatDialog) { }
 
   ngOnInit(): void {
+    this.comparePhotosControl = new FormControl(false);
+
+    this.comparePhotosControl.valueChanges
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe(value => {
+        this.comparePhotos = value;
+      });
   }
 
   ngOnDestroy(): void {

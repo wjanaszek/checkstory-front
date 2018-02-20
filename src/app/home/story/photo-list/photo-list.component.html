@@ -1,5 +1,12 @@
-
+<div class="photos-action__btns">
   <button class="add-btn" mat-raised-button (click)="openAddPhotoDialog()">ADD PHOTO</button>
+  <mat-slide-toggle class="compare-images__slide-tgl"
+                    color="primary"
+                    labelPosition="before"
+                    [formControl]="comparePhotosControl">
+    Compare photos
+  </mat-slide-toggle>
+</div>
 <div class="loading-photos__overlay" *ngIf="photosLoading">
   <mat-progress-spinner mode="indeterminate" [diameter]="25">
   </mat-progress-spinner>
@@ -12,8 +19,7 @@
                    [colspan]="1"
                    [rowspan]="1"
                    [style.background-image]="'url(data:image/' + photo.imageType + ';base64,' + photo.content + ')'">
-      <!--<img [src]="'data:image/' + photo.imageType + ';base64,' + photo.content" height="150px" (click)="openPreview(photo)">-->
-      <mat-checkbox></mat-checkbox>
+      <mat-checkbox [disabled]="!comparePhotos"></mat-checkbox>
       <button mat-icon-button [matMenuTriggerFor]="menu" (click)="menuButtonClicked(photo, $event)">
         <mat-icon>more_vert</mat-icon>
       </button>

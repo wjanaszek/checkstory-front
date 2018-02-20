@@ -1,6 +1,6 @@
 .add-btn {
-  margin-top: 15px;
   float: right;
+  vertical-align: middle;
 }
 
 .loading-photos__overlay {
@@ -12,6 +12,17 @@
   mat-progress-spinner {
     margin-right: 25px;
   }
+}
+
+.compare-images__slide-tgl {
+  float: right;
+  margin-right: 30px;
+  vertical-align: middle;
+}
+
+.photos-action__btns {
+  height: 50px;
+  margin-top: 15px;
 }
 
 mat-grid-list {
