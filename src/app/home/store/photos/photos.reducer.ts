@@ -41,6 +41,16 @@ export function photosReducer(state: PhotosState = PhotosInitialState, action): 
       return {...state, photos: action.payload, photosLoading: false};
     }
 
+    case PhotosActions.types.updatePhotoSuccess: {
+      return {...state, photos: state.photos.map(photo => {
+        if (photo.id === action.payload.id) {
+          return action.payload;
+        } else {
+          return photo;
+        }
+      })};
+    }
+
     default: {
       return state;
     }

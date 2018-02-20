@@ -105,11 +105,6 @@ export namespace PhotosActions {
     }
   }
 
-  export interface LoadPhotoListPayload {
-    story: Story;
-    photos: Photo[];
-  }
-
   export class LoadPhotoListSuccess implements Action {
     type = types.loadPhotoListSuccess;
 

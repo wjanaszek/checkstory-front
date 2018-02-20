@@ -17,7 +17,7 @@ export class PhotoDialogComponent implements OnInit {
   fileInput: ElementRef;
 
   constructor(public dialogRef: MatDialogRef<PhotoDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: any) {
-    this.title = data.dialog;
+    this.title = data.title;
   }
 
   ngOnInit(): void {

@@ -72,7 +72,8 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
     this.store.dispatch(new StoryActions.UpdateStory({...this.story, ...event}));
   }
 
-  onUpdatePhoto(event: Photo): void {
+  onUpdatePhoto(photo: Photo): void {
+    this.store.dispatch(new PhotosActions.UpdatePhoto({ photo: photo, story: this.story }));
   }
 
   toggleEdit(): void {

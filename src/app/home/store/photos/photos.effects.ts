@@ -62,6 +62,22 @@ export class PhotosEffects {
       })
     );
 
+  @Effect()
+  updatePhoto$: Observable<Action> = this.actions$
+    .ofType(PhotosActions.types.updatePhoto)
+    .pipe(
+      map((action: PhotosActions.UpdatePhoto) => action.payload),
+      switchMap((payload: PhotoActionPayload) => {
+        const tmpUrl = config.endpoints.updatePhoto.replace(':storyNumber', `${payload.story.id}`);
+        const url = tmpUrl.replace(':photoNumber', `${payload.photo.id}`);
+        return this.http.put(url, payload.photo)
+          .pipe(
+            map((res: any) => new PhotosActions.UpdatePhotoSuccess(payload.photo)),
+            catchError((err: HttpErrorResponse) => of(new PhotosActions.UpdatePhotoFail(err)))
+          );
+      })
+    );
+
   constructor(private actions$: Actions, private http: HttpClient, private snackbar: MatSnackBar) {
   }
 }
