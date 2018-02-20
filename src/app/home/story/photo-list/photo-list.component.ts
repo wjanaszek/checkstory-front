@@ -7,6 +7,7 @@ import { takeUntil } from 'rxjs/operators';
 import { Observable } from 'rxjs/Observable';
 import { NgxGalleryComponent, NgxGalleryImage, NgxGalleryOptions } from 'ngx-gallery';
 import { PhotoPreviewComponent } from '../photo-preview/photo-preview.component';
+import * as url from 'url';
 
 @Component({
   selector: 'cs-photo-list',
@@ -48,6 +49,10 @@ export class PhotoListComponent implements OnInit, OnDestroy {
 
   delete(photo: Photo): void {
     this.deletePhoto.emit(photo);
+  }
+
+  getUrlFromBase64(photo: Photo): any {
+    return 'url(\'data:image/\'' + photo.imageType + ';base64,' + photo.content + ')';
   }
 
   menuButtonClicked(photo: Photo, event): void {

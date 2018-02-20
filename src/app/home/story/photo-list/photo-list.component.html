@@ -1,18 +1,24 @@
-<button class="add-btn" mat-raised-button (click)="openAddPhotoDialog()">ADD PHOTO</button>
+
+  <button class="add-btn" mat-raised-button (click)="openAddPhotoDialog()">ADD PHOTO</button>
 <div class="loading-photos__overlay" *ngIf="photosLoading">
   <mat-progress-spinner mode="indeterminate" [diameter]="25">
   </mat-progress-spinner>
   <span>Loading photos...</span>
 </div>
 <ng-container *ngIf="photos">
-  <mat-list>
-    <mat-list-item *ngFor="let photo of photos" style="height: 200px;">
-      <img [src]="'data:image/' + photo.imageType + ';base64,' + photo.content" height="150px" (click)="openPreview(photo)">
+  <mat-grid-list cols="7" rowHeight="200px">
+    <mat-grid-tile *ngFor="let photo of photos"
+                   (click)="openPreview(photo)"
+                   [colspan]="1"
+                   [rowspan]="1"
+                   [style.background-image]="'url(data:image/' + photo.imageType + ';base64,' + photo.content + ')'">
+      <!--<img [src]="'data:image/' + photo.imageType + ';base64,' + photo.content" height="150px" (click)="openPreview(photo)">-->
+      <mat-checkbox></mat-checkbox>
       <button mat-icon-button [matMenuTriggerFor]="menu" (click)="menuButtonClicked(photo, $event)">
         <mat-icon>more_vert</mat-icon>
       </button>
-    </mat-list-item>
-  </mat-list>
+    </mat-grid-tile>
+  </mat-grid-list>
 </ng-container>
 
 <mat-menu #menu="matMenu" [overlapTrigger]="false">
