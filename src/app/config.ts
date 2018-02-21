@@ -16,6 +16,7 @@ export const config = {
     updateStory: environment.apiUrl + '/api/stories/:storyNumber',
 
     // Photo
+    comparePhotos: environment.apiUrl + '/api/images-compare',
     createPhoto: environment.apiUrl + '/api/stories/:storyNumber/photos',
     deletePhoto: environment.apiUrl + '/api/stories/:storyNumber/photos/:photoNumber',
     loadPhotoList: environment.apiUrl + '/api/stories/:storyNumber/photos',

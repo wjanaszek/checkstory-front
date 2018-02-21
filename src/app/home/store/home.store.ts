@@ -1,19 +1,19 @@
 import { ActionReducerMap, createFeatureSelector, createSelector } from '@ngrx/store';
 import { StoryInitialState, storyReducer, StoryState } from './story/story.reducer';
-import { PhotosInitialState, photosReducer, PhotosState } from './photos/photos.reducer';
+import { PhotoInitialState, photoReducer, PhotoState } from './photo/photo.reducer';
 
 export interface State {
-  photosState: PhotosState;
+  photoState: PhotoState;
   storyState: StoryState;
 }
 
 const initialState: State = {
-  photosState: PhotosInitialState,
+  photoState: PhotoInitialState,
   storyState: StoryInitialState
 };
 
 export const reducers: ActionReducerMap<State> = {
-  photosState: photosReducer,
+  photoState: photoReducer,
   storyState: storyReducer,
 };
 
@@ -22,19 +22,34 @@ export const getHomeState = createFeatureSelector<State>('home');
 /**
  * Photo selectors
  */
-export const getPhotosState = createSelector(
+export const getPhotoState = createSelector(
   getHomeState,
-  state => state.photosState
+  state => state.photoState
+);
+
+export const getPhotosCompareResult = createSelector(
+  getPhotoState,
+  state => state.compareResult
 );
 
 export const getPhotoList = createSelector(
-  getPhotosState,
+  getPhotoState,
   state => state.photos
 );
 
+export const getPhotosComparing = createSelector(
+  getPhotoState,
+  state => state.photosComparing
+);
+
 export const getPhotosLoading = createSelector(
-  getPhotosState,
+  getPhotoState,
   state => state.photosLoading
+);
+
+export const getPhotosToCompare = createSelector(
+  getPhotoState,
+  state => state.photosToCompare
 );
 
 /**

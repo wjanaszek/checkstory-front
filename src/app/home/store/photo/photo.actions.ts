@@ -2,22 +2,27 @@ import { Action } from '@ngrx/store';
 import { Story } from '../../../shared/models/story.model';
 import { Photo } from '../../../shared/models/photo.model';
 import { importExpr } from '@angular/compiler/src/output/output_ast';
+import { ComparePhotosFailType } from '../../../shared/enums/compare-photos-fail-type.enum';
 
-export namespace PhotosActions {
+export namespace PhotoActions {
   export const types = {
-    clearPhotoList: '[Story] Clear Photo List',
-    createPhoto: '[Story] Create Photo',
-    createPhotoFail: '[Story] Create Photo Fail',
-    createPhotoSuccess: '[Story] Create Photo Success',
-    deletePhoto: '[Story] Delete Photo',
-    deletePhotoFail: '[Story] Delete Photo Fail',
-    deletePhotoSuccess: '[Story] Delete Photo Success',
-    loadPhotoList: '[Story] Load Photo List',
-    loadPhotoListFail: '[Story] Load Photo List Fail',
-    loadPhotoListSuccess: '[Story] Load Photo List Success',
-    updatePhoto: '[Story] Update Photo',
-    updatePhotoFail: '[Story] Update Photo Fail',
-    updatePhotoSuccess: '[Story] Update Photo Success',
+    clearPhotoList: '[Photo] Clear Photo List',
+    comparePhotos: '[Photo] Compare Photos',
+    comparePhotosFail: '[Photo] Compare Photos Fail',
+    comparePhotosSuccess: '[Photo] Compare Photos Success',
+    createPhoto: '[Photo] Create Photo',
+    createPhotoFail: '[Photo] Create Photo Fail',
+    createPhotoSuccess: '[Photo] Create Photo Success',
+    deletePhoto: '[Photo] Delete Photo',
+    deletePhotoFail: '[Photo] Delete Photo Fail',
+    deletePhotoSuccess: '[Photo] Delete Photo Success',
+    loadPhotoList: '[Photo] Load Photo List',
+    loadPhotoListFail: '[Photo] Load Photo List Fail',
+    loadPhotoListSuccess: '[Photo] Load Photo List Success',
+    setPhotoToCompare: '[Photo] Set Photo To Compare',
+    updatePhoto: '[Photo] Update Photo',
+    updatePhotoFail: '[Photo] Update Photo Fail',
+    updatePhotoSuccess: '[Photo] Update Photo Success',
   };
 
   /**
@@ -27,6 +32,34 @@ export namespace PhotosActions {
     type = types.clearPhotoList;
 
     constructor() {
+    }
+  }
+
+  /**
+   * Compare photos actions
+   */
+  export class ComparePhotos implements Action {
+    type = types.comparePhotos;
+
+    constructor(public payload: Photo[]) {
+    }
+  }
+
+  export interface ComparePhotosFailPayload {
+    type: ComparePhotosFailType;
+  }
+
+  export class ComparePhotosFail implements Action {
+    type = types.comparePhotosFail;
+
+    constructor(public payload: ComparePhotosFailPayload) {
+    }
+  }
+
+  export class ComparePhotosSuccess implements Action {
+    type = types.comparePhotosSuccess;
+
+    constructor(public payload: Photo) {
     }
   }
 
@@ -109,6 +142,16 @@ export namespace PhotosActions {
     type = types.loadPhotoListSuccess;
 
     constructor(public payload: Photo[]) {
+    }
+  }
+
+  /**
+   * Set photo to compare action
+   */
+  export class SetPhotoToCompare implements Action {
+    type = types.setPhotoToCompare;
+
+    constructor(public payload: Photo) {
     }
   }
 

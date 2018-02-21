@@ -8,10 +8,12 @@ import { SharedModule } from '../../shared/shared.module';
 import { StoryDialogComponent } from './story-dialog/story-dialog.component';
 import { StoryGuard } from './story-guard/story.guard';
 import { StoryFormComponent } from './story-form/story-form.component';
-import { StoryDetailGuard } from './story-detail-guard/story-detail.guard';
 import { PhotoListComponent } from './photo-list/photo-list.component';
 import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
 import { PhotoPreviewComponent } from './photo-preview/photo-preview.component';
+import { PhotoCompareComponent } from './photo-compare/photo-compare.component';
+import { CompareGuard } from './photo-compare/compare-guard/compare.guard';
+import { StoryDetailGuard } from './story-detail/story-detail-guard/story-detail.guard';
 
 @NgModule({
   imports: [
@@ -28,6 +30,7 @@ import { PhotoPreviewComponent } from './photo-preview/photo-preview.component';
     StoryDialogComponent,
     StoryFormComponent,
     PhotoPreviewComponent,
+    PhotoCompareComponent,
   ],
   entryComponents: [
     PhotoDialogComponent,
@@ -35,8 +38,10 @@ import { PhotoPreviewComponent } from './photo-preview/photo-preview.component';
     StoryDialogComponent
   ],
   providers: [
+    CompareGuard,
     StoryDetailGuard,
     StoryGuard,
   ]
 })
-export class StoryModule { }
+export class StoryModule {
+}

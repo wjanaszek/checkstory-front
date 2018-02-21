@@ -1,0 +1,23 @@
+<div class="col-md-12">
+  <div class="col-md-6">
+    <!-- first image -->
+    first
+  </div>
+  <div class="col-md-6">
+    <!-- second image -->
+    second
+  </div>
+  <div class="col-md-12">
+    <!-- result image -->
+    <ng-container [ngSwitch]="photosComparing">
+      <div *ngSwitchCase="true">
+        <mat-progress-spinner mode="indeterminate" [diameter]="35"></mat-progress-spinner>
+        <span>Comparing photos... This may take a while</span>
+      </div>
+      <div *ngSwitchCase="false">
+        result
+        <img *ngIf="photosCompareResult">
+      </div>
+    </ng-container>
+  </div>
+</div>

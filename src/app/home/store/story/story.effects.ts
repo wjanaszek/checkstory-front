@@ -11,7 +11,7 @@ import { StoryActions } from './story.actions';
 import { StoryFormPayload } from '../../../shared/interfaces/story-form-payload.interface';
 import { State } from '../home.store';
 import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
-import { PhotosActions } from '../photos/photos.actions';
+import { PhotoActions } from '../photo/photo.actions';
 
 @Injectable()
 export class StoryEffects {
@@ -50,7 +50,7 @@ export class StoryEffects {
     .pipe(
       map((action: StoryActions.LoadSelectedStory) => action.payload),
       switchMap((payload: Story) => {
-        this.store.dispatch(new PhotosActions.ClearPhotoList());
+        this.store.dispatch(new PhotoActions.ClearPhotoList());
         return this.http.get(config.endpoints.loadSelectedStory.replace(':storyNumber', `${payload.id}`))
           .pipe(
             map((res: any) => new StoryActions.LoadSelectedStorySuccess(Story.deserialize(res))),
@@ -65,7 +65,7 @@ export class StoryEffects {
     .pipe(
       map((action: StoryActions.LoadSelectedStorySuccess) => action.payload),
       switchMap((payload: Story) => {
-        this.store.dispatch(new PhotosActions.LoadPhotoList(payload));
+        this.store.dispatch(new PhotoActions.LoadPhotoList(payload));
         return new EmptyObservable();
       })
     );

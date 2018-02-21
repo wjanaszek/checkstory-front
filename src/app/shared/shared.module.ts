@@ -26,6 +26,7 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { MapComponent } from './map/map.component';
 import { AgmCoreModule } from '@agm/core';
+import { ComparePhotosFailType } from './enums/compare-photos-fail-type.enum';
 
 /**
  * Shared module should only contain declarations and exports of components used in whole application. No service providers

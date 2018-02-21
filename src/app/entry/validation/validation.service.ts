@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpClientModule, } from '@angular/common/http';
 import { config } from '../../config';
 import { Observable } from 'rxjs/Observable';
 import { catchError, switchMap } from 'rxjs/operators';
@@ -13,7 +13,7 @@ export class ValidationService {
   }
 
   checkLogin(login: string): Observable<boolean> {
-    console.log('http = ' + this.http);
+    console.log(this.http);
     return this.http.post(config.endpoints.checkLogin, login)
       .pipe(
         switchMap(res => {

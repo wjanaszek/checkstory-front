@@ -2,11 +2,11 @@ import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, RouterStateSnapshot } from '@angular/router';
 import { Observable } from 'rxjs/Observable';
 import { Store } from '@ngrx/store';
-import { getStoryState, State } from '../../store/home.store';
+import { getStoryState, State } from '../../../store/home.store';
 import { catchError, switchMap, tap } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
-import { StoryActions } from '../../store/story/story.actions';
-import { Story } from '../../../shared/models/story.model';
+import { StoryActions } from '../../../store/story/story.actions';
+import { Story } from '../../../../shared/models/story.model';
 
 @Injectable()
 export class StoryDetailGuard implements CanActivate {
