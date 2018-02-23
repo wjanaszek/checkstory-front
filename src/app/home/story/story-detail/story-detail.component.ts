@@ -11,6 +11,7 @@ import { Photo } from '../../../shared/models/photo.model';
 import { MatDialog } from '@angular/material';
 import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
 import { PhotoActions } from '../../store/photo/photo.actions';
+import { PhotoDialogComponent } from '../photo-dialog/photo-dialog.component';
 
 @Component({
   selector: 'cs-story-detail',
@@ -44,8 +45,26 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  onAddPhoto(photo: Photo): void {
-    this.store.dispatch(new PhotoActions.CreatePhoto({ photo: photo, story: this.story }));
+  comparePhotos(): void {
+
+  }
+
+  openAddPhotoDialog(): void {
+    const dialogRef = this.dialog.open(PhotoDialogComponent, {
+      data: {
+        title: 'Add photo'
+      }
+    });
+
+    dialogRef.afterClosed()
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe(data => {
+        if (data) {
+          this.store.dispatch(new PhotoActions.CreatePhoto({ photo: data, story: this.story }));
+        }
+      });
   }
 
   onDeletePhoto(photo: Photo): void {

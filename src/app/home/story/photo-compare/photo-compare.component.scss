@@ -1,4 +1,19 @@
 .compare-images {
   width: 100%;
-  height: 450px;
+  height: 350px;
+  border: dashed 2px;
+  border-color: grey;
+  border-radius: 5px;
+}
+
+.compare-result {
+  margin-top: 15px;
+}
+
+.result-image {
+  width: 100%;
+  height: 600px;
+  border: dashed 2px;
+  border-color: grey;
+  border-radius: 5px;
 }

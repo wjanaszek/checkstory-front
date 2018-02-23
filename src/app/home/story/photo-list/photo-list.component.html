@@ -1,27 +1,19 @@
-<div class="photos-action__btns">
-  <button class="add-btn" mat-raised-button (click)="openAddPhotoDialog()">ADD PHOTO</button>
-</div>
+<h3 matLine>Photos</h3>
 <div class="loading-photos__overlay" *ngIf="photosLoading">
   <mat-progress-spinner mode="indeterminate" [diameter]="25">
   </mat-progress-spinner>
   <span>Loading photos...</span>
 </div>
 <ng-container *ngIf="photos">
-  <div>
-    <div class="col-md-3">
-      <mat-list>
-        <mat-list-item *ngFor="let photo of photos">
-          <img matListAvatar [src]="'data:image/' + photo.imageType + ';base64,' + photo.content" (click)="openPreview(photo)">
-          <p matLine>
-            <span>{{ photo.createDate | date }}</span>
-          </p>
-        </mat-list-item>
-      </mat-list>
-    </div>
-    <div class="col-md-9">
-      <cs-photo-compare></cs-photo-compare>
-    </div>
-  </div>
+  <mat-list>
+    <mat-list-item *ngFor="let photo of photos">
+      <img matListAvatar [src]="'data:image/' + photo.imageType + ';base64,' + photo.content"
+           (click)="openPreview(photo)">
+      <p matLine>
+        <span>{{ photo.createDate | date }}</span>
+      </p>
+    </mat-list-item>
+  </mat-list>
 </ng-container>
 
 <mat-menu #menu="matMenu" [overlapTrigger]="false">

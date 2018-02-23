@@ -5,3 +5,30 @@
 .editing-mode {
   color: grey;
 }
+
+.photos-action__btns {
+  margin-top: 15px;
+  float: right;
+  button {
+    &:last-of-type {
+      margin-left: 10px;
+    }
+  }
+}
+
+mat-card {
+  margin-right: 10px;
+  margin-left: 10px;
+}
+
+.photo-list {
+  margin-top: 15px;
+  border-width: 0 2px 2px 0;
+  border-color: grey;
+  border-radius: 5px;
+  border-style: solid;
+}
+
+.photo-compare {
+  margin-top: -40px;
+}

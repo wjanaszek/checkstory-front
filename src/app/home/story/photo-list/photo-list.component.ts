@@ -17,8 +17,6 @@ export class PhotoListComponent implements OnInit, OnDestroy {
   @Input()
   photosLoading: boolean;
   @Output()
-  addPhoto: EventEmitter<Photo> = new EventEmitter<Photo>();
-  @Output()
   deletePhoto: EventEmitter<Photo> = new EventEmitter<Photo>();
   @Output()
   updatePhoto: EventEmitter<Photo> = new EventEmitter<Photo>();
@@ -81,24 +79,6 @@ export class PhotoListComponent implements OnInit, OnDestroy {
     if (event) {
       event.stopPropagation();
     }
-  }
-
-  openAddPhotoDialog(): void {
-    const dialogRef = this.dialog.open(PhotoDialogComponent, {
-      data: {
-        title: 'Add photo'
-      }
-    });
-
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.ngUnsubscribe)
-      )
-      .subscribe(data => {
-        if (data) {
-          this.addPhoto.emit(data);
-        }
-      });
   }
 
   openEditPhotoDialog(menuPhoto: Photo): void {

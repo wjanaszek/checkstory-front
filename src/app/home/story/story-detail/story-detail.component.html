@@ -11,12 +11,21 @@
       [story]="story"
       (formValueChange)="onFormValueChange($event)">
     </cs-story-form>
-    <cs-photo-list [photos]="(photos | async)"
-                   [photosLoading]="(photosLoading | async)"
-                   (addPhoto)="onAddPhoto($event)"
-                   (deletePhoto)="onDeletePhoto($event)"
-                   (updatePhoto)="onUpdatePhoto($event)">
-    </cs-photo-list>
+    <div class="photos-action__btns">
+      <button mat-raised-button (click)="comparePhotos()">COMPARE PHOTOS</button>
+      <button mat-raised-button (click)="openAddPhotoDialog()">ADD PHOTO</button>
+    </div>
+    <div class="row">
+      <div class="col-md-3 photo-list">
+        <cs-photo-list [photos]="(photos | async)"
+                       [photosLoading]="(photosLoading | async)"
+                       (deletePhoto)="onDeletePhoto($event)"
+                       (updatePhoto)="onUpdatePhoto($event)">
+        </cs-photo-list>
+      </div>
+      <div class="col-md-9 photo-compare">
+        <cs-photo-compare></cs-photo-compare>
+      </div>
+    </div>
   </mat-card-content>
-  <a mat-button [routerLink]="['/home/story', story.id, 'compare']">COMPARE TEST</a>
 </mat-card>
