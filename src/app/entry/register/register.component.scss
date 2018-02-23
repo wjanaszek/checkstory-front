@@ -4,17 +4,16 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 700px;
+  min-width: 300px;
 }
 
-mat-form-field {
-  width: 100%;
-}
+:host {
+  mat-form-field {
+    width: 100%;
+  }
 
-button {
-  float: right;
-}
-
-mat-card {
-  min-width: 450px;
+  button {
+    margin-right: 10px !important;
+    float: right;
+  }
 }

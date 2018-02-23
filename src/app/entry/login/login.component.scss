@@ -4,7 +4,7 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  min-width: 700px;
+  min-width: 450px !important;
 }
 
 .login-button {
@@ -16,15 +16,13 @@ mat-form-field {
   width: 100%;
 }
 
-button {
-  float: right;
-}
+:host {
+  button {
+    margin-right: 10px !important;
+    float: right;
+  }
 
-a {
-  margin-left: 15px;
-  text-decoration: none;
-}
-
-mat-card {
-  min-width: 450px;
+  .mat-card {
+    min-width: 450px;
+  }
 }

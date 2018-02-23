@@ -24,8 +24,6 @@
           <div *ngIf="form.get('login').status === 'VALID'">
             Login available
           </div>
-        </div>
-        <div class="col-md-10">
           <mat-form-field>
             <input type="email" matInput placeholder="Email" formControlName="email">
             <mat-hint>
@@ -45,8 +43,6 @@
           <div *ngIf="form.get('email').status === 'VALID'">
             Email available
           </div>
-        </div>
-        <div class="col-md-10">
           <mat-form-field>
             <input type="password" matInput placeholder="Password" formControlName="password">
             <mat-hint>

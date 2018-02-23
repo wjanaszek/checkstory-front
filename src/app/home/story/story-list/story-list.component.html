@@ -1,23 +1,25 @@
-<mat-card>
-  <mat-card-title>
-    <span>Story list</span>
-    <div class="add-btn">
-      <button mat-raised-button (click)="addStory()">ADD STORY</button>
-    </div>
-  </mat-card-title>
-  <mat-card-content>
-    <mat-list>
-      <mat-list-item *ngFor="let story of (stories | async)" (click)="details(story)">
-        <mat-icon mat-list-icon>folder</mat-icon>
-        <h4 mat-line>{{ story.title }}</h4>
-        <p mat-line>{{ story.createDate | date }}</p>
-        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="menuButtonClicked(story, $event)">
-          <mat-icon>more_vert</mat-icon>
-        </button>
-      </mat-list-item>
-    </mat-list>
-  </mat-card-content>
-</mat-card>
+<div class="story-list">
+  <mat-card>
+    <mat-card-title>
+      <span>Story list</span>
+      <div class="add-btn">
+        <button mat-raised-button (click)="addStory()">ADD STORY</button>
+      </div>
+    </mat-card-title>
+    <mat-card-content>
+      <mat-list>
+        <mat-list-item *ngFor="let story of (stories | async)" (click)="details(story)">
+          <mat-icon mat-list-icon>folder</mat-icon>
+          <h4 mat-line>{{ story.title }}</h4>
+          <p mat-line>{{ story.createDate | date }}</p>
+          <button mat-icon-button [matMenuTriggerFor]="menu" (click)="menuButtonClicked(story, $event)">
+            <mat-icon>more_vert</mat-icon>
+          </button>
+        </mat-list-item>
+      </mat-list>
+    </mat-card-content>
+  </mat-card>
+</div>
 
 <mat-menu #menu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item (click)="edit(menuStory)">

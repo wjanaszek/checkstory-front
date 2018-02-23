@@ -1,13 +1,16 @@
-<div class="col-md-12">
+<div>
+  <h3 matLine>Compare</h3>
   <div class="col-md-6">
-    <!-- first image -->
-    first
+    <div class="compare-images">
+      <p matLine>Photo 1:</p>
+    </div>
   </div>
   <div class="col-md-6">
-    <!-- second image -->
-    second
+    <div class="compare-images">
+      <p matLine>Photo 2:</p>
+    </div>
   </div>
-  <div class="col-md-12">
+  <div>
     <!-- result image -->
     <ng-container [ngSwitch]="photosComparing">
       <div *ngSwitchCase="true">

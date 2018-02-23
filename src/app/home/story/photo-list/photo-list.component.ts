@@ -1,13 +1,10 @@
-import { Component, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Photo } from '../../../shared/models/photo.model';
 import { MatDialog } from '@angular/material';
 import { PhotoDialogComponent } from '../photo-dialog/photo-dialog.component';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
-import { Observable } from 'rxjs/Observable';
-import { NgxGalleryComponent, NgxGalleryImage, NgxGalleryOptions } from 'ngx-gallery';
 import { PhotoPreviewComponent } from '../photo-preview/photo-preview.component';
-import * as url from 'url';
 import { FormControl } from '@angular/forms';
 
 @Component({
@@ -18,29 +15,33 @@ import { FormControl } from '@angular/forms';
 export class PhotoListComponent implements OnInit, OnDestroy {
 
   @Input()
-  set photos(photos: Photo[]) {
-    if (photos && photos.length) {
-      this._photos = photos;
-    }
-  };
-  @Input()
   photosLoading: boolean;
-
   @Output()
   addPhoto: EventEmitter<Photo> = new EventEmitter<Photo>();
   @Output()
   deletePhoto: EventEmitter<Photo> = new EventEmitter<Photo>();
   @Output()
   updatePhoto: EventEmitter<Photo> = new EventEmitter<Photo>();
-
   menuPhoto: Photo;
   comparePhotos: boolean;
   comparePhotosControl: FormControl;
-
   private ngUnsubscribe: Subject<void> = new Subject<void>();
+
+  constructor(private dialog: MatDialog) {
+  }
+
   private _photos: Photo[];
 
-  constructor(private dialog: MatDialog) { }
+  get photos(): Photo[] {
+    return this._photos;
+  }
+
+  @Input()
+  set photos(photos: Photo[]) {
+    if (photos && photos.length) {
+      this._photos = photos;
+    }
+  };
 
   ngOnInit(): void {
     this.comparePhotosControl = new FormControl(false);
@@ -57,6 +58,14 @@ export class PhotoListComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  onCheckboxChange(event): void {
+    console.log(event);
+    event = event || window.event;
+    if (event) {
+      event.stopPropagation();
+    }
   }
 
   delete(photo: Photo): void {
@@ -112,7 +121,7 @@ export class PhotoListComponent implements OnInit, OnDestroy {
       });
   }
 
-  openPreview(photo: Photo): void {
+  openPreview(photo: Photo, event): void {
     this.dialog.open(PhotoPreviewComponent, {
       data: {
         photo: photo
@@ -120,8 +129,5 @@ export class PhotoListComponent implements OnInit, OnDestroy {
     });
   }
 
-  get photos(): Photo[] {
-    return this._photos;
-  }
 
 }

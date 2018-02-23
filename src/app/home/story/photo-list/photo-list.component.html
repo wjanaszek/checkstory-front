@@ -1,11 +1,5 @@
 <div class="photos-action__btns">
   <button class="add-btn" mat-raised-button (click)="openAddPhotoDialog()">ADD PHOTO</button>
-  <mat-slide-toggle class="compare-images__slide-tgl"
-                    color="primary"
-                    labelPosition="before"
-                    [formControl]="comparePhotosControl">
-    Compare photos
-  </mat-slide-toggle>
 </div>
 <div class="loading-photos__overlay" *ngIf="photosLoading">
   <mat-progress-spinner mode="indeterminate" [diameter]="25">
@@ -13,18 +7,21 @@
   <span>Loading photos...</span>
 </div>
 <ng-container *ngIf="photos">
-  <mat-grid-list cols="7" rowHeight="200px">
-    <mat-grid-tile *ngFor="let photo of photos"
-                   (click)="openPreview(photo)"
-                   [colspan]="1"
-                   [rowspan]="1"
-                   [style.background-image]="'url(data:image/' + photo.imageType + ';base64,' + photo.content + ')'">
-      <mat-checkbox [disabled]="!comparePhotos"></mat-checkbox>
-      <button mat-icon-button [matMenuTriggerFor]="menu" (click)="menuButtonClicked(photo, $event)">
-        <mat-icon>more_vert</mat-icon>
-      </button>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <div>
+    <div class="col-md-3">
+      <mat-list>
+        <mat-list-item *ngFor="let photo of photos">
+          <img matListAvatar [src]="'data:image/' + photo.imageType + ';base64,' + photo.content" (click)="openPreview(photo)">
+          <p matLine>
+            <span>{{ photo.createDate | date }}</span>
+          </p>
+        </mat-list-item>
+      </mat-list>
+    </div>
+    <div class="col-md-9">
+      <cs-photo-compare></cs-photo-compare>
+    </div>
+  </div>
 </ng-container>
 
 <mat-menu #menu="matMenu" [overlapTrigger]="false">
