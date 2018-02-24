@@ -7,11 +7,14 @@
 <ng-container *ngIf="photos">
   <mat-list>
     <mat-list-item *ngFor="let photo of photos">
-      <img matListAvatar [src]="'data:image/' + photo.imageType + ';base64,' + photo.content"
-           (click)="openPreview(photo)">
-      <p matLine>
-        <span>{{ photo.createDate | date }}</span>
-      </p>
+      <button mat-icon-button [matMenuTriggerFor]="menu" (click)="menuButtonClicked(photo)">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <div class="photo" (click)="openPreview(photo)">
+        <img [src]="'data:image/' + photo.imageType + ';base64,' + photo.content">
+      </div>
+      <p matLine>{{ photo.createDate | date }}</p>
+      <mat-checkbox matLine color="primary" (change)="onCheckboxChange(photo)">Compare</mat-checkbox>
     </mat-list-item>
   </mat-list>
 </ng-container>

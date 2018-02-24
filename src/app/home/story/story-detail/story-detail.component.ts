@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getPhotoList, getPhotosLoading, getSelectedStory, State } from '../../store/home.store';
+import { getPhotoList, getPhotosLoading, getPhotosToCompare, getSelectedStory, State } from '../../store/home.store';
 import { Story } from '../../../shared/models/story.model';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
@@ -24,14 +24,26 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
   story: Story;
   photos: Observable<Photo[]>;
   photosLoading: Observable<boolean>;
+  photosToCompare: Photo[];
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
-  constructor(private dialog: MatDialog, private store: Store<State>) { }
+  constructor(private dialog: MatDialog, private store: Store<State>) {
+  }
 
   ngOnInit(): void {
     this.photos = this.store.select(getPhotoList);
     this.photosLoading = this.store.select(getPhotosLoading);
+
+    this.store.select(getPhotosToCompare)
+      .pipe(
+        takeUntil(this.ngUnsubscribe)
+      )
+      .subscribe(photos => {
+        if (photos) {
+          this.photosToCompare = photos;
+        }
+      });
 
     this.store.select(getSelectedStory)
       .pipe(
@@ -46,7 +58,7 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
   }
 
   comparePhotos(): void {
-
+    this.store.dispatch(new PhotoActions.ComparePhotos(this.photosToCompare));
   }
 
   openAddPhotoDialog(): void {
@@ -62,7 +74,7 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
       )
       .subscribe(data => {
         if (data) {
-          this.store.dispatch(new PhotoActions.CreatePhoto({ photo: data, story: this.story }));
+          this.store.dispatch(new PhotoActions.CreatePhoto({photo: data, story: this.story}));
         }
       });
   }
@@ -82,7 +94,7 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
       )
       .subscribe(result => {
         if (result) {
-          this.store.dispatch(new PhotoActions.DeletePhoto({ photo: photo, story: this.story }));
+          this.store.dispatch(new PhotoActions.DeletePhoto({photo: photo, story: this.story}));
         }
       });
   }
@@ -91,8 +103,12 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
     this.store.dispatch(new StoryActions.UpdateStory({...this.story, ...event}));
   }
 
+  onPhotoToCompare(photo: Photo): void {
+    this.store.dispatch(new PhotoActions.SetPhotoToCompare(photo));
+  }
+
   onUpdatePhoto(photo: Photo): void {
-    this.store.dispatch(new PhotoActions.UpdatePhoto({ photo: photo, story: this.story }));
+    this.store.dispatch(new PhotoActions.UpdatePhoto({photo: photo, story: this.story}));
   }
 
   toggleEdit(): void {

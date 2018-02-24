@@ -52,7 +52,7 @@ export function photoReducer(state: PhotoState = PhotoInitialState, action): Pho
     }
 
     case PhotoActions.types.loadPhotoList: {
-      return {...state, photosLoading: true};
+      return {...state, compareResult: null, photosLoading: true, photosToCompare: []};
     }
 
     case PhotoActions.types.loadPhotoListFail: {
@@ -67,7 +67,7 @@ export function photoReducer(state: PhotoState = PhotoInitialState, action): Pho
       if (state.photosToCompare.some(photo => photo.id === action.payload.id)) {
         return {...state, photosToCompare: state.photosToCompare.filter(photo => photo.id !== action.payload.id)};
       } else {
-        const photosToCompare = [action.payload, ...state.photosToCompare];
+        const photosToCompare = [...state.photosToCompare, action.payload];
         return {...state, photosToCompare: photosToCompare};
       }
     }

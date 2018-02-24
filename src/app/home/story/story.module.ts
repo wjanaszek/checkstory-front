@@ -12,7 +12,6 @@ import { PhotoListComponent } from './photo-list/photo-list.component';
 import { PhotoDialogComponent } from './photo-dialog/photo-dialog.component';
 import { PhotoPreviewComponent } from './photo-preview/photo-preview.component';
 import { PhotoCompareComponent } from './photo-compare/photo-compare.component';
-import { CompareGuard } from './photo-compare/compare-guard/compare.guard';
 import { StoryDetailGuard } from './story-detail/story-detail-guard/story-detail.guard';
 
 @NgModule({
@@ -38,7 +37,6 @@ import { StoryDetailGuard } from './story-detail/story-detail-guard/story-detail
     StoryDialogComponent
   ],
   providers: [
-    CompareGuard,
     StoryDetailGuard,
     StoryGuard,
   ]

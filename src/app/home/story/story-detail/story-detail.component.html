@@ -20,11 +20,13 @@
         <cs-photo-list [photos]="(photos | async)"
                        [photosLoading]="(photosLoading | async)"
                        (deletePhoto)="onDeletePhoto($event)"
+                       (photoToCompare)="onPhotoToCompare($event)"
                        (updatePhoto)="onUpdatePhoto($event)">
         </cs-photo-list>
       </div>
       <div class="col-md-9 photo-compare">
-        <cs-photo-compare></cs-photo-compare>
+        <cs-photo-compare [photos]="photosToCompare">
+        </cs-photo-compare>
       </div>
     </div>
   </mat-card-content>

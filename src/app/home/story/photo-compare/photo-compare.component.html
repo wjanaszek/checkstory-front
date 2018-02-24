@@ -2,26 +2,29 @@
 <div class="col-md-6">
   <p matLine>Photo 1:</p>
   <div class="compare-images">
+    <img *ngIf="photos && photos[0]"
+         [src]="'data:image/' + photos[0].imageType + ';base64,' + photos[0].content"
+         (click)="openPreview(photos[0])">
   </div>
 </div>
 <div class="col-md-6">
   <p matLine>Photo 2:</p>
   <div class="compare-images">
+    <img *ngIf="photos && photos[1]"
+         [src]="'data:image/' + photos[1].imageType + ';base64,' + photos[1].content"
+         (click)="openPreview(photos[1])">
   </div>
 </div>
 <div class="col-md-12 compare-result">
   <!-- result image -->
-  <ng-container [ngSwitch]="photosComparing">
-    <ng-container *ngSwitchCase="true">
-      <mat-progress-spinner mode="indeterminate" [diameter]="35"></mat-progress-spinner>
+  <h3 matLine>Result:</h3>
+  <div class="result-image">
+    <div *ngIf="photosComparing" class="photos-comparing-overlay">
+      <mat-progress-spinner mode="indeterminate" [diameter]="20"></mat-progress-spinner>
       <p matLine>Comparing photos... This may take a while</p>
-    </ng-container>
-    <ng-container *ngSwitchCase="false">
-      <h3 matLine>Result:</h3>
-      <div class="result-image">
-        <img *ngIf="photosCompareResult"
-             [src]="'data:image/' + photosCompareResult.imageType + ';base64,' + photosCompareResult.content">
-      </div>
-    </ng-container>
-  </ng-container>
+    </div>
+    <img *ngIf="photosCompareResult"
+         [src]="'data:image/' + this.photosCompareResult.imageType + ';base64,' + this.photosCompareResult.content"
+         (click)="openPreview(photosCompareResult)">
+  </div>
 </div>

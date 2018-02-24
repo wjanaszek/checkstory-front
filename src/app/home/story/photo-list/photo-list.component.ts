@@ -16,10 +16,14 @@ export class PhotoListComponent implements OnInit, OnDestroy {
 
   @Input()
   photosLoading: boolean;
+
+  @Output()
+  photoToCompare: EventEmitter<Photo> = new EventEmitter<Photo>();
   @Output()
   deletePhoto: EventEmitter<Photo> = new EventEmitter<Photo>();
   @Output()
   updatePhoto: EventEmitter<Photo> = new EventEmitter<Photo>();
+
   menuPhoto: Photo;
   comparePhotos: boolean;
   comparePhotosControl: FormControl;
@@ -58,27 +62,16 @@ export class PhotoListComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
-  onCheckboxChange(event): void {
-    console.log(event);
-    event = event || window.event;
-    if (event) {
-      event.stopPropagation();
-    }
+  onCheckboxChange(photo: Photo): void {
+    this.photoToCompare.emit(photo);
   }
 
   delete(photo: Photo): void {
     this.deletePhoto.emit(photo);
   }
 
-  getUrlFromBase64(photo: Photo): any {
-    return 'url(\'data:image/\'' + photo.imageType + ';base64,' + photo.content + ')';
-  }
-
-  menuButtonClicked(photo: Photo, event): void {
+  menuButtonClicked(photo: Photo): void {
     this.menuPhoto = photo;
-    if (event) {
-      event.stopPropagation();
-    }
   }
 
   openEditPhotoDialog(menuPhoto: Photo): void {
@@ -101,7 +94,7 @@ export class PhotoListComponent implements OnInit, OnDestroy {
       });
   }
 
-  openPreview(photo: Photo, event): void {
+  openPreview(photo: Photo): void {
     this.dialog.open(PhotoPreviewComponent, {
       data: {
         photo: photo

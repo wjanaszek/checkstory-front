@@ -1,9 +1,11 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Photo } from '../../../shared/models/photo.model';
 import { Store } from '@ngrx/store';
 import { getPhotosCompareResult, getPhotosComparing, State } from '../../store/home.store';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
+import { PhotoPreviewComponent } from '../photo-preview/photo-preview.component';
+import { MatDialog } from '@angular/material';
 
 @Component({
   selector: 'cs-photo-compare',
@@ -12,13 +14,16 @@ import { takeUntil } from 'rxjs/operators';
 })
 export class PhotoCompareComponent implements OnInit, OnDestroy {
 
-  photos: Photo[];
+  @Input()
+  photos: Photo[] = [];
+
   photosCompareResult: Photo;
   photosComparing: boolean;
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
-  constructor(private store: Store<State>) { }
+  constructor(private dialog: MatDialog, private store: Store<State>) {
+  }
 
   ngOnInit(): void {
     this.store.select(getPhotosComparing)
@@ -43,6 +48,14 @@ export class PhotoCompareComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.ngUnsubscribe.next();
     this.ngUnsubscribe.complete();
+  }
+
+  openPreview(photo: Photo): void {
+    this.dialog.open(PhotoPreviewComponent, {
+      data: {
+        photo: photo
+      }
+    });
   }
 
 }
