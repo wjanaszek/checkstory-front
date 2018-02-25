@@ -26,8 +26,6 @@ import { ToolbarComponent } from './toolbar/toolbar.component';
 import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
 import { MapComponent } from './map/map.component';
 import { AgmCoreModule } from '@agm/core';
-import { ComparePhotosFailType } from './enums/compare-photos-fail-type.enum';
-import { SafeUrl } from './pipes/safe-url.pipe';
 
 /**
  * Shared module should only contain declarations and exports of components used in whole application. No service providers
@@ -65,7 +63,6 @@ import { SafeUrl } from './pipes/safe-url.pipe';
     ToolbarComponent,
     ConfirmDialogComponent,
     MapComponent,
-    SafeUrl
   ],
   exports: [
     FormsModule,
@@ -90,7 +87,6 @@ import { SafeUrl } from './pipes/safe-url.pipe';
     PageNotFoundComponent,
     ReactiveFormsModule,
     RouterModule,
-    SafeUrl,
     ToolbarComponent,
     MapComponent,
   ],

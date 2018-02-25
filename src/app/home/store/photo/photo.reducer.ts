@@ -33,7 +33,7 @@ export function photoReducer(state: PhotoState = PhotoInitialState, action): Pho
     }
 
     case PhotoActions.types.clearPhotoList: {
-      return {...state, photos: null};
+      return {...state, photos: null, compareResult: null, photosToCompare: []};
     }
 
     case PhotoActions.types.createPhotoSuccess: {

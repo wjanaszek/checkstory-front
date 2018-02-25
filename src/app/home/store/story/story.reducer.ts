@@ -2,7 +2,7 @@ import { StoryActions } from './story.actions';
 import { Story } from '../../../shared/models/story.model';
 
 export interface StoryState {
-  selectedStory: any;
+  selectedStory: Story;
   storyList: Story[];
 }
 

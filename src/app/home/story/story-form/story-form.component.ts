@@ -26,7 +26,12 @@ export class StoryFormComponent implements OnInit, OnDestroy {
   @Input()
   editing: boolean;
   @Input()
-  story: Story;
+  set story(story: Story) {
+    if (story) {
+      this._story = story;
+      this.initForm(story);
+    }
+  }
 
   @Output()
   formValueChange: EventEmitter<StoryFormPayload> = new EventEmitter<StoryFormPayload>();
@@ -35,24 +40,19 @@ export class StoryFormComponent implements OnInit, OnDestroy {
   form: FormGroup;
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
+  private _story: Story;
 
   constructor(private fb: FormBuilder) {
   }
 
   ngOnInit(): void {
-    this.form = this.fb.group({
-      title: [this.story ? this.story.title : '', Validators.required],
-      notes: [this.story ? this.story.notes : ''],
-      latitude: [this.story ? this.story.latitude : this.defaultPosition.lat, Validators.required],
-      longitude: [this.story ? this.story.longitude : this.defaultPosition.lng, Validators.required],
-      createDate: [this.story ? this.story.createDate : new Date(), Validators.required]
-    });
+    this.initForm();
 
     this.form.valueChanges
       .pipe(
         distinctUntilChanged(),
-        debounceTime(250),
         skipWhile(() => this.form.invalid),
+        debounceTime(250),
         takeUntil(this.ngUnsubscribe)
       )
       .subscribe(data => {
@@ -65,9 +65,23 @@ export class StoryFormComponent implements OnInit, OnDestroy {
     this.ngUnsubscribe.complete();
   }
 
+  get story(): Story {
+    return this._story;
+  }
+
   onLocationChange(event: LocationPayload): void {
     Object.keys(event).forEach(key => {
       this.form.get(key).setValue(event[key]);
+    });
+  }
+
+  private initForm(story?: Story): void {
+    this.form = this.fb.group({
+      title: [story ? story.title : '', Validators.required],
+      notes: [story ? story.notes : ''],
+      latitude: [story ? story.latitude : this.defaultPosition.lat, Validators.required],
+      longitude: [story ? story.longitude : this.defaultPosition.lng, Validators.required],
+      createDate: [story ? story.createDate : new Date(), Validators.required]
     });
   }
 }

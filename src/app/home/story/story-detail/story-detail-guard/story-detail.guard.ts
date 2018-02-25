@@ -15,20 +15,21 @@ export class StoryDetailGuard implements CanActivate {
   }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> {
-    return this.loadSelectedStory(route)
+    const storyId: number = route.params['id'];
+    return this.loadSelectedStory(storyId)
       .pipe(
         switchMap(() => of(true)),
         catchError(() => of(false))
       );
   }
 
-  loadSelectedStory(route: ActivatedRouteSnapshot): Observable<any> {
+  loadSelectedStory(storyId: number): Observable<any> {
     return this.store.select(getStoryState)
       .pipe(
         tap((data: any) => {
-          if (!data.selectedStory) {
+          if (!data.selectedStory || data.selectedStory.id !== storyId) {
             const story = new Story();
-            story.id = route.params['id'];
+            story.id = storyId;
             this.store.dispatch(new StoryActions.LoadSelectedStory(story));
           }
         })
