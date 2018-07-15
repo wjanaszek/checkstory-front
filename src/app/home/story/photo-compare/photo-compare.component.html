@@ -1,4 +1,63 @@
 <h3 matLine>Compare</h3>
+<div class="col-md-12">
+  Options:
+</div>
+<div class="col-md-6">
+  <h5>Sensitivity:</h5>
+  <div class="col-md-6">
+    <mat-slider [max]="maxDistance"
+                [min]="minDistance"
+                [thumbLabel]="true"
+                [value]="sensitivity"
+                (change)="onSensitivityChange($event)"
+                color="primary">
+    </mat-slider>
+  </div>
+  <div class="col-md-6">
+    <mat-form-field matTooltip="Lower sensitivity value means more comparision sensitivity">
+      <input matInput type="number" [formControl]="sensitivityControl">
+      <mat-hint>
+        <mat-error *ngIf="sensitivityControl.hasError('required') && sensitivityControl.touched">
+          Sensitivity is required
+        </mat-error>
+        <mat-error *ngIf="sensitivityControl.hasError('min') && sensitivityControl.touched">
+          Min value is {{ minDistance }}
+        </mat-error>
+        <mat-error *ngIf="sensitivityControl.hasError('max') && sensitivityControl.touched">
+          Max value is {{ maxDistance }}
+        </mat-error>
+      </mat-hint>
+    </mat-form-field>
+  </div>
+</div>
+<div class="col-md-6">
+  <h5>Target image size:</h5>
+  <div class="col-md-6">
+    <mat-slider [max]="maxTargetSize"
+                [min]="minTargetSize"
+                [thumbLabel]="true"
+                [value]="targetSize"
+                (change)="onTargetSizeChange($event)"
+                color="primary">
+    </mat-slider>
+  </div>
+  <div class="col-md-6">
+    <mat-form-field matTooltip="Lower target size means lower result image resolution, but result will come quicker than with a high resolution">
+      <input matInput type="number" [formControl]="targetSizeControl">
+      <mat-hint>
+        <mat-error *ngIf="targetSizeControl.hasError('required') && targetSizeControl.touched">
+          Target size is required
+        </mat-error>
+        <mat-error *ngIf="targetSizeControl.hasError('min') && targetSizeControl.touched">
+          Min value is {{ minTargetSize }}
+        </mat-error>
+        <mat-error *ngIf="targetSizeControl.hasError('max') && targetSizeControl.touched">
+          Max value is {{ maxTargetSize }}
+        </mat-error>
+      </mat-hint>
+    </mat-form-field>
+  </div>
+</div>
 <div class="col-md-6">
   <p matLine>Photo 1:</p>
   <div class="compare-images">

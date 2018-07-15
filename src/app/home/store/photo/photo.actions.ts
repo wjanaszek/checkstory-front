@@ -1,7 +1,6 @@
 import { Action } from '@ngrx/store';
 import { Story } from '../../../shared/models/story.model';
 import { Photo } from '../../../shared/models/photo.model';
-import { importExpr } from '@angular/compiler/src/output/output_ast';
 import { ComparePhotosFailType } from '../../../shared/enums/compare-photos-fail-type.enum';
 
 export namespace PhotoActions {
@@ -38,10 +37,16 @@ export namespace PhotoActions {
   /**
    * Compare photos actions
    */
+  export interface ComparePhotosPayload {
+    photos: Photo[];
+    sensitivity: number;
+    targetSize: number;
+  }
+
   export class ComparePhotos implements Action {
     type = types.comparePhotos;
 
-    constructor(public payload: Photo[]) {
+    constructor(public payload: ComparePhotosPayload) {
     }
   }
 

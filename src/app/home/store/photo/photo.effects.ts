@@ -13,6 +13,7 @@ import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 import { ComparePhotosFailType } from '../../../shared/enums/compare-photos-fail-type.enum';
 import PhotoActionPayload = PhotoActions.PhotoActionPayload;
 import ComparePhotosFailPayload = PhotoActions.ComparePhotosFailPayload;
+import ComparePhotosPayload = PhotoActions.ComparePhotosPayload;
 
 @Injectable()
 export class PhotoEffects {
@@ -22,17 +23,18 @@ export class PhotoEffects {
     .ofType(PhotoActions.types.comparePhotos)
     .pipe(
       map((action: PhotoActions.ComparePhotos) => action.payload),
-      switchMap((payload: Photo[]) => {
-        if (payload.length < 2) {
+      switchMap((payload: ComparePhotosPayload) => {
+        if (payload.photos.length < 2) {
           return of(new PhotoActions.ComparePhotosFail({type: ComparePhotosFailType.tooFewPhotos}));
-        } else if (payload.length > 2) {
+        } else if (payload.photos.length > 2) {
           return of(new PhotoActions.ComparePhotosFail({type: ComparePhotosFailType.tooManyPhotos}));
         } else {
-          const tmpUrl = config.endpoints.comparePhotos.replace(':firstId', payload[0].id.toString());
-          const url = tmpUrl.replace(':secondId', payload[1].id.toString());
+          const tmpUrl = config.endpoints.comparePhotos.replace(':firstId', payload.photos[0].id.toString());
+          const url = tmpUrl.replace(':secondId', payload.photos[1].id.toString());
           return this.http.get(url, {
             params: {
-              sensitivity: '200'
+              sensitivity: payload.sensitivity.toString(),
+              size: payload.targetSize.toString()
             }
           })
             .pipe(

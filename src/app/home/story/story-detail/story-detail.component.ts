@@ -21,6 +21,7 @@ import { PhotoActions } from '../../store/photo/photo.actions';
 import { PhotoDialogComponent } from '../photo-dialog/photo-dialog.component';
 import { ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
+import { config } from '../../../config';
 
 @Component({
   selector: 'cs-story-detail',
@@ -35,6 +36,8 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
   photos: Observable<Photo[]>;
   photosLoading: Observable<boolean>;
   photosToCompare: Photo[];
+  sensitivity = config.compareOptions.defaultSensitivity;
+  targetSize = config.compareOptions.defaultTargetSize;
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
@@ -69,7 +72,11 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
   }
 
   comparePhotos(): void {
-    this.store.dispatch(new PhotoActions.ComparePhotos(this.photosToCompare));
+    this.store.dispatch(new PhotoActions.ComparePhotos({
+      photos: this.photosToCompare,
+      sensitivity: this.sensitivity,
+      targetSize: this.targetSize
+    }));
   }
 
   openAddPhotoDialog(): void {
@@ -108,6 +115,14 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
 
   onPhotoToCompare(photo: Photo): void {
     this.store.dispatch(new PhotoActions.SetPhotoToCompare(photo));
+  }
+
+  onSensitivityChange(value: number): void {
+    this.sensitivity = value;
+  }
+
+  onTargetSizeChange(value: number): void {
+    this.targetSize = value;
   }
 
   onUpdatePhoto(photo: Photo): void {
