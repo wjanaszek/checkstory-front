@@ -16,7 +16,7 @@ export function entryReducer(state: EntryState = initialState, action: any): Ent
   switch (action.type) {
 
     case EntryActions.types.login: {
-      return {...state, loginError: null};
+      return {...state, loginError: null, registerError: null};
     }
 
     case EntryActions.types.loginFail: {
@@ -28,7 +28,7 @@ export function entryReducer(state: EntryState = initialState, action: any): Ent
     }
 
     case EntryActions.types.register: {
-      return {...state, registerError: null};
+      return {...state, loginError: null, registerError: null};
     }
 
     case EntryActions.types.registerFail: {

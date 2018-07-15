@@ -3,7 +3,6 @@ export class Photo {
   imageType: string;
   createDate: any;
   content?: string;
-  storyNumber: number;
   originalPhoto: string;
 
   // @TODO remove this column in API?

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpClientModule, } from '@angular/common/http';
+import { HttpClient, } from '@angular/common/http';
 import { config } from '../../config';
 import { Observable } from 'rxjs/Observable';
-import { catchError, switchMap } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 import { of } from 'rxjs/observable/of';
 import { AbstractControl } from '@angular/forms';
+import { AsyncValidationPayload } from '../../shared/interfaces/async-validation-payload.interface';
 
 @Injectable()
 export class ValidationService {
@@ -12,23 +13,26 @@ export class ValidationService {
   constructor(private http: HttpClient) {
   }
 
-  checkLogin(login: string): Observable<boolean> {
-    console.log(this.http);
-    return this.http.post(config.endpoints.checkLogin, login)
+  emailAvailable(email: string): Observable<boolean> {
+    return this.http.get(config.endpoints.checkEmail, {
+      params: {
+        email: email
+      }
+    })
       .pipe(
-        switchMap(res => {
-          return res ? of(false) : of(true);
-        }),
+        map((res: AsyncValidationPayload) => res.result === 'false'),
         catchError(err => of(false))
       );
   }
 
-  checkEmail(email: string): Observable<boolean> {
-    return this.http.post(config.endpoints.checkEmail, email)
+  usernameAvailable(login: string): Observable<boolean> {
+    return this.http.get(config.endpoints.checkLogin, {
+      params: {
+        username: login
+      }
+    })
       .pipe(
-        switchMap(res => {
-          return res ? of(false) : of(true);
-        }),
+        map((res: AsyncValidationPayload) => res.result === 'false'),
         catchError(err => of(false))
       );
   }

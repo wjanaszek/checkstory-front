@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { LocationPayload } from '../interfaces/location-payload.interface';
+import { LocationPayload } from '../../interfaces/location-payload.interface';
 
 @Component({
   selector: 'cs-map',

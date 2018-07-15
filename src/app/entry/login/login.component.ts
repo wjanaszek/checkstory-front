@@ -21,7 +21,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      login: ['', Validators.required],
+      username: ['', Validators.required],
       password: ['', Validators.required]
     });
 
@@ -34,11 +34,12 @@ export class LoginComponent implements OnInit {
 
   submit(): void {
     if (this.form.invalid) {
-      this.form.markAsDirty();
+      this.form.markAsPristine();
       return;
     }
 
     this.store.dispatch(new EntryActions.Login(this.form.value));
+    this.form.markAsPristine();
   }
 
 }

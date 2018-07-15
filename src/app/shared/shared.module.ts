@@ -18,13 +18,12 @@ import {
   MatToolbarModule,
   MatTooltipModule,
 } from '@angular/material';
-import { MatMomentDateModule } from '@angular/material-moment-adapter';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
-import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { ToolbarComponent } from './toolbar/toolbar.component';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
-import { MapComponent } from './map/map.component';
+import { PageNotFoundComponent } from './components/page-not-found/page-not-found.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
+import { ConfirmDialogComponent } from './components/confirm-dialog/confirm-dialog.component';
+import { MapComponent } from './components/map/map.component';
 import { AgmCoreModule } from '@agm/core';
 
 /**
@@ -49,7 +48,6 @@ import { AgmCoreModule } from '@agm/core';
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatMomentDateModule,
     MatProgressSpinnerModule,
     MatSlideToggleModule,
     MatSnackBarModule,
@@ -78,7 +76,6 @@ import { AgmCoreModule } from '@agm/core';
     MatInputModule,
     MatListModule,
     MatMenuModule,
-    MatMomentDateModule,
     MatProgressSpinnerModule,
     MatSlideToggleModule,
     MatSnackBarModule,

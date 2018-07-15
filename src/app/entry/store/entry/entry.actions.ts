@@ -15,7 +15,7 @@ export namespace EntryActions {
    */
   export interface LoginPayload {
     login: string;
-    password: string;       // must be md5 hashed in effects
+    password: string;
   }
 
   export class Login implements Action {
@@ -45,7 +45,7 @@ export namespace EntryActions {
   export interface RegisterPayload {
     login: string;
     email: string;
-    password: string;     // must be md5 hashed in effects
+    password: string;
   }
 
   export class Register implements Action {

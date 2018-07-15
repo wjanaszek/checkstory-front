@@ -8,28 +8,26 @@
       <form [formGroup]="form">
         <div class="col-md-10">
           <mat-form-field>
-            <input matInput placeholder="Login" formControlName="login">
+            <input matInput placeholder="Username" formControlName="username">
             <mat-hint>
-              <mat-error *ngIf="!form.get('login').pristine && form.get('login').status === 'INVALID'">
-                Login already in use
+              <mat-error *ngIf="!form.get('username').pristine && form.get('username').status === 'INVALID'">
+                Username already in use
               </mat-error>
-              <mat-error *ngIf="form.get('login').hasError('required') && form.get('login').touched">
-                Login is required
+              <mat-error *ngIf="form.get('username').hasError('required') && form.get('username').touched">
+                Username is required
               </mat-error>
             </mat-hint>
           </mat-form-field>
-          <div *ngIf="form.get('login').status === 'PENDING'">
+          <div *ngIf="form.get('username').status === 'PENDING'">
             Checking...
           </div>
-          <div *ngIf="form.get('login').status === 'VALID'">
-            Login available
+          <div *ngIf="form.get('username').status === 'VALID'">
+            Username available
           </div>
           <mat-form-field>
-            <input type="email" matInput placeholder="Email" formControlName="email">
+            <input matInput placeholder="Email" formControlName="email">
             <mat-hint>
-              <mat-error *ngIf="!form.get('email').pristine
-              && form.get('email').status === 'INVALID'
-              && form.get('email').value !== ''">
+              <mat-error *ngIf="!form.get('email').pristine && form.get('email').status === 'INVALID'">
                 Email already in use
               </mat-error>
               <mat-error *ngIf="form.get('email').hasError('required') && form.get('email').touched">
@@ -67,7 +65,7 @@
     </mat-card-content>
     <mat-card-actions>
       <div class="col-md-10">
-        <button mat-raised-button type="submit" class="signup_btn" (click)="submit()"
+        <button mat-raised-button color="primary" type="submit" class="signup_btn" (click)="submit()"
                 [disabled]="form.invalid || form.pristine">
           SIGN UP
         </button>

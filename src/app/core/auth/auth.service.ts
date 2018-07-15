@@ -8,11 +8,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    if (this.getToken() && tokenNotExpired(null, this.getToken())) {
-      return true;
-    } else {
-      return false;
-    }
+    return !!(this.getToken() && tokenNotExpired(null, this.getToken()));
   }
 
   getToken(): string {

@@ -12,6 +12,8 @@ import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 import { Md5 } from 'ts-md5/dist/md5';
 import LoginPayload = EntryActions.LoginPayload;
 import RegisterPayload = EntryActions.RegisterPayload;
+import { LoginSuccessPayload } from '../../../shared/interfaces/login-success-payload.interface';
+import { ApiResponse } from '../../../shared/interfaces/api-response.interface';
 
 @Injectable()
 export class EntryEffects {
@@ -22,10 +24,10 @@ export class EntryEffects {
     .pipe(
       map((action: EntryActions.Login) => action.payload),
       switchMap((payload: LoginPayload) => {
-        const loginPayload = {...payload, password: Md5.hashStr(payload.password)};
-        return this.http.post(config.endpoints.login, loginPayload, {observe: 'response'})
+        // const loginPayload = {...payload, password: Md5.hashStr(payload.password)};
+        return this.http.post<ApiResponse>(config.endpoints.login, payload, {observe: 'response'})
           .pipe(
-            map((res: any) => new EntryActions.LoginSuccess(res)),
+            map((res) => new EntryActions.LoginSuccess(res.body)),
             catchError((err: HttpErrorResponse) => of(new EntryActions.LoginFail(err)))
           );
       })
@@ -36,8 +38,8 @@ export class EntryEffects {
     .ofType(EntryActions.types.loginSuccess)
     .pipe(
       map((action: EntryActions.LoginSuccess) => action.payload),
-      switchMap(payload => {
-        localStorage.setItem('jwt-token', payload.headers.get('Authorization').slice(7));
+      switchMap((payload: LoginSuccessPayload) => {
+        localStorage.setItem('jwt-token', payload.accessToken);
         this.router.navigateByUrl('home');
         return new EmptyObservable();
       })
@@ -49,8 +51,8 @@ export class EntryEffects {
     .pipe(
       map((action: EntryActions.Register) => action.payload),
       switchMap((payload: RegisterPayload) => {
-        const registerPayload = {...payload, password: Md5.hashStr(payload.password)};
-        return this.http.post(config.endpoints.createUser, registerPayload)
+        // const registerPayload = {...payload, password: Md5.hashStr(payload.password)};
+        return this.http.post(config.endpoints.createUser, payload)
           .pipe(
             map(res => new EntryActions.RegisterSuccess()),
             catchError((err: HttpErrorResponse) => of(new EntryActions.RegisterFail(err)))

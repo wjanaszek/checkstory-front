@@ -8,10 +8,10 @@
       <form [formGroup]="form">
         <div class="col-md-10">
           <mat-form-field>
-            <input matInput placeholder="Login" formControlName="login">
+            <input matInput placeholder="Username" formControlName="username">
             <mat-hint>
-              <mat-error *ngIf="form.get('login').hasError('required') && form.get('login').touched">
-                Login is required
+              <mat-error *ngIf="form.get('username').hasError('required') && form.get('username').touched">
+                Username is required
               </mat-error>
             </mat-hint>
           </mat-form-field>
@@ -31,9 +31,9 @@
     </mat-card-content>
     <mat-card-actions>
       <div class="col-md-10">
-        <!--<a [routerLink]="'#'" class="forgot_pswd_btn">Forgot password</a>-->
         <button
           mat-raised-button
+          color="primary"
           type="submit"
           (click)="submit()"
           [disabled]="form.invalid">
