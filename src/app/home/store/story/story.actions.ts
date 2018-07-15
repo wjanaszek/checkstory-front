@@ -10,9 +10,9 @@ export namespace StoryActions {
     deleteStory: '[Story] Delete Story',
     deleteStoryFail: '[Story] Delete Story Fail',
     deleteStorySuccess: '[Story] Delete Story Success',
-    loadSelectedStory: '[Story] Load Selected Story',
-    loadSelectedStoryFail: '[Story] Load Selected Story Fail',
-    loadSelectedStorySuccess: '[Story] Load Selected Story Success',
+    loadStory: '[Story] Load Story',
+    loadStoryFail: '[Story] Load Story Fail',
+    loadStorySuccess: '[Story] Load Story Success',
     loadStoryList: '[Story] Load Story List',
     loadStoryListFail: '[Story] Load Story List Fail',
     loadStoryListSuccess: '[Story] Load Story List Success',
@@ -72,22 +72,22 @@ export namespace StoryActions {
   /**
    * Load selected story action
    */
-  export class LoadSelectedStory implements Action {
-    type = types.loadSelectedStory;
+  export class LoadStory implements Action {
+    type = types.loadStory;
 
     constructor(public payload: Story) {
     }
   }
 
-  export class LoadSelectedStoryFail implements Action {
-    type = types.loadSelectedStoryFail;
+  export class LoadStoryFail implements Action {
+    type = types.loadStoryFail;
 
     constructor(public payload: any) {
     }
   }
 
-  export class LoadSelectedStorySuccess implements Action {
-    type = types.loadSelectedStorySuccess;
+  export class LoadStorySuccess implements Action {
+    type = types.loadStorySuccess;
 
     constructor(public payload: Story) {
     }

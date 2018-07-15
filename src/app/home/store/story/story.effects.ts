@@ -10,8 +10,8 @@ import { of } from 'rxjs/observable/of';
 import { StoryActions } from './story.actions';
 import { StoryFormPayload } from '../../../shared/interfaces/story-form-payload.interface';
 import { State } from '../home.store';
-import { EmptyObservable } from 'rxjs/observable/EmptyObservable';
 import { PhotoActions } from '../photo/photo.actions';
+import { ApiResponse } from '../../../shared/interfaces/api-response.interface';
 
 @Injectable()
 export class StoryEffects {
@@ -36,7 +36,7 @@ export class StoryEffects {
     .pipe(
       map((action: StoryActions.DeleteStory) => action.payload),
       switchMap((payload: Story) => {
-        return this.http.delete(config.endpoints.deleteStory.replace(':storyNumber', `${payload.id}`))
+        return this.http.delete(config.endpoints.deleteStory.replace(':id', `${payload.id}`))
           .pipe(
             map((res: any) => new StoryActions.DeleteStorySuccess(payload)),
             catchError((err: HttpErrorResponse) => of(new StoryActions.DeleteStoryFail(err)))
@@ -45,28 +45,24 @@ export class StoryEffects {
     );
 
   @Effect()
-  loadSelectedStory$: Observable<Action> = this.actions$
-    .ofType(StoryActions.types.loadSelectedStory)
+  loadStory$: Observable<Action> = this.actions$
+    .ofType(StoryActions.types.loadStory)
     .pipe(
-      map((action: StoryActions.LoadSelectedStory) => action.payload),
+      map((action: StoryActions.LoadStory) => action.payload),
       switchMap((payload: Story) => {
         this.store.dispatch(new PhotoActions.ClearPhotoList());
-        return this.http.get(config.endpoints.loadSelectedStory.replace(':storyNumber', `${payload.id}`))
+        return this.http.get<ApiResponse>(config.endpoints.loadStory.replace(':id', `${payload.id}`), {
+          params: {
+            withPhotos: 'true'
+          }
+        })
           .pipe(
-            map((res: any) => new StoryActions.LoadSelectedStorySuccess(Story.deserialize(res))),
-            catchError((err: HttpErrorResponse) => of(new StoryActions.LoadSelectedStoryFail(err)))
+            map((res: any) => {
+              this.store.dispatch(new PhotoActions.LoadPhotoListSuccess(res.photos));
+              return new StoryActions.LoadStorySuccess(Story.deserialize(res));
+            }),
+            catchError((err: HttpErrorResponse) => of(new StoryActions.LoadStoryFail(err)))
           );
-      })
-    );
-
-  @Effect()
-  loadSelectedStorySuccess$: Observable<Action> = this.actions$
-    .ofType(StoryActions.types.loadSelectedStorySuccess)
-    .pipe(
-      map((action: StoryActions.LoadSelectedStorySuccess) => action.payload),
-      switchMap((payload: Story) => {
-        this.store.dispatch(new PhotoActions.LoadPhotoList(payload));
-        return new EmptyObservable();
       })
     );
 
@@ -93,11 +89,9 @@ export class StoryEffects {
     .pipe(
       map((action: StoryActions.UpdateStory) => action.payload),
       switchMap((payload: Story) => {
-        return this.http.put(config.endpoints.updateStory.replace(':storyNumber', `${payload.id}`), payload)
+        return this.http.put<ApiResponse>(config.endpoints.updateStory.replace(':id', `${payload.id}`), payload)
           .pipe(
-            map((res: any) => {
-              return new StoryActions.UpdateStorySuccess(Story.deserialize(res));
-            }),
+            map((res: any) => new StoryActions.UpdateStorySuccess(Story.deserialize(res))),
             catchError((err: HttpErrorResponse) => of(new StoryActions.UpdateStoryFail(err)))
           );
       })

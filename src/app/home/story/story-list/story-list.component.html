@@ -7,8 +7,8 @@
       </div>
     </mat-card-title>
     <mat-card-content>
-      <mat-list>
-        <mat-list-item *ngFor="let story of (stories | async)" (click)="details(story)">
+      <mat-list *ngIf="!(storyListLoading | async); else spinner">
+        <mat-list-item *ngFor="let story of (storyList | async)" (click)="details(story)">
           <mat-icon mat-list-icon>folder</mat-icon>
           <h4 mat-line>{{ story.title }}</h4>
           <p mat-line>{{ story.createDate | date }}</p>
@@ -20,6 +20,9 @@
     </mat-card-content>
   </mat-card>
 </div>
+<ng-template #spinner>
+  <mat-spinner mode="indeterminate"></mat-spinner>
+</ng-template>
 
 <mat-menu #menu="matMenu" [overlapTrigger]="false">
   <button mat-menu-item (click)="edit(menuStory)">

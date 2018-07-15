@@ -40,18 +40,14 @@ export class PhotoListComponent implements OnInit, OnDestroy {
 
   @Input()
   set photos(photos: Photo[]) {
-    if (photos && photos.length) {
-      this._photos = photos;
-    }
-  };
+    this._photos = photos;
+  }
 
   ngOnInit(): void {
     this.comparePhotosControl = new FormControl(false);
 
     this.comparePhotosControl.valueChanges
-      .pipe(
-        takeUntil(this.ngUnsubscribe)
-      )
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(value => {
         this.comparePhotos = value;
       });
@@ -81,11 +77,7 @@ export class PhotoListComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.ngUnsubscribe)
-      )
-      .subscribe(data => {
+    dialogRef.afterClosed().subscribe(data => {
         if (data) {
           const photo = {...data};
           photo.id = menuPhoto.id;

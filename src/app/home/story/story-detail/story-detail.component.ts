@@ -1,6 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getPhotoList, getPhotosLoading, getPhotosToCompare, getSelectedStory, State } from '../../store/home.store';
+import {
+  getPhotoList,
+  getPhotosLoading,
+  getPhotosToCompare,
+  getSelectedStory,
+  getSelectedStoryLoading,
+  State
+} from '../../store/home.store';
 import { Story } from '../../../shared/models/story.model';
 import { Subject } from 'rxjs/Subject';
 import { takeUntil } from 'rxjs/operators';
@@ -9,9 +16,11 @@ import { StoryActions } from '../../store/story/story.actions';
 import { Observable } from 'rxjs/Observable';
 import { Photo } from '../../../shared/models/photo.model';
 import { MatDialog } from '@angular/material';
-import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 import { PhotoActions } from '../../store/photo/photo.actions';
 import { PhotoDialogComponent } from '../photo-dialog/photo-dialog.component';
+import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'cs-story-detail',
@@ -22,23 +31,27 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
 
   editing = false;
   story: Story;
+  storyLoading: Observable<boolean>;
   photos: Observable<Photo[]>;
   photosLoading: Observable<boolean>;
   photosToCompare: Photo[];
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
-  constructor(private dialog: MatDialog, private store: Store<State>) {
+  constructor(private dialog: MatDialog, private location: Location, private route: ActivatedRoute, private store: Store<State>) {
   }
 
   ngOnInit(): void {
     this.photos = this.store.select(getPhotoList);
     this.photosLoading = this.store.select(getPhotosLoading);
+    this.storyLoading = this.store.select(getSelectedStoryLoading);
+
+    this.route.queryParams
+      .pipe(takeUntil(this.ngUnsubscribe))
+      .subscribe(params => this.editing = params.edit);
 
     this.store.select(getPhotosToCompare)
-      .pipe(
-        takeUntil(this.ngUnsubscribe)
-      )
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(photos => {
         if (photos) {
           this.photosToCompare = photos;
@@ -46,9 +59,7 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
       });
 
     this.store.select(getSelectedStory)
-      .pipe(
-        takeUntil(this.ngUnsubscribe)
-      )
+      .pipe(takeUntil(this.ngUnsubscribe))
       .subscribe(s => this.story = s);
   }
 
@@ -68,15 +79,11 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.ngUnsubscribe)
-      )
-      .subscribe(data => {
-        if (data) {
-          this.store.dispatch(new PhotoActions.CreatePhoto({photo: data, story: this.story}));
-        }
-      });
+    dialogRef.afterClosed().subscribe(data => {
+      if (data) {
+        this.store.dispatch(new PhotoActions.CreatePhoto({photo: data, story: this.story}));
+      }
+    });
   }
 
   onDeletePhoto(photo: Photo): void {
@@ -88,15 +95,11 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.ngUnsubscribe)
-      )
-      .subscribe(result => {
-        if (result) {
-          this.store.dispatch(new PhotoActions.DeletePhoto({photo: photo, story: this.story}));
-        }
-      });
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        this.store.dispatch(new PhotoActions.DeletePhoto({photo: photo, story: this.story}));
+      }
+    });
   }
 
   onFormValueChange(event: StoryFormPayload): void {
@@ -113,6 +116,7 @@ export class StoryDetailComponent implements OnInit, OnDestroy {
 
   toggleEdit(): void {
     this.editing = !this.editing;
+    this.location.replaceState(`home/story/${this.story.id}`, `edit=${this.editing}`);
   }
 
 }

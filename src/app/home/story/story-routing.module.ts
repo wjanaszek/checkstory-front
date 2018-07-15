@@ -3,8 +3,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { StoryComponent } from './story.component';
 import { StoryListComponent } from './story-list/story-list.component';
 import { StoryDetailComponent } from './story-detail/story-detail.component';
-import { StoryGuard } from './story-guard/story.guard';
-import { StoryDetailGuard } from './story-detail/story-detail-guard/story-detail.guard';
+import { StoryGuard } from './story.guard';
+import { StoryDetailGuard } from './story-detail/story-detail.guard';
 
 const routes: Routes = [
   {

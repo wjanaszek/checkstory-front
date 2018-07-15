@@ -3,12 +3,16 @@ import { Story } from '../../../shared/models/story.model';
 
 export interface StoryState {
   selectedStory: Story;
+  selectedStoryLoading: boolean;
   storyList: Story[];
+  storyListLoading: boolean;
 }
 
 export const StoryInitialState: StoryState = {
   selectedStory: null,
-  storyList: []
+  selectedStoryLoading: false,
+  storyList: [],
+  storyListLoading: false
 };
 
 export function storyReducer(state: StoryState = StoryInitialState, action): StoryState {
@@ -28,12 +32,28 @@ export function storyReducer(state: StoryState = StoryInitialState, action): Sto
       }
     }
 
-    case StoryActions.types.loadStoryListSuccess: {
-      return {...state, storyList: action.payload};
+    case StoryActions.types.loadStoryList: {
+      return {...state, storyListLoading: true};
     }
 
-    case StoryActions.types.loadSelectedStorySuccess: {
-      return {...state, selectedStory: action.payload};
+    case StoryActions.types.loadStoryListFail: {
+      return {...state, storyListLoading: false};
+    }
+
+    case StoryActions.types.loadStoryListSuccess: {
+      return {...state, storyList: action.payload, storyListLoading: false};
+    }
+
+    case StoryActions.types.loadStory: {
+      return {...state, selectedStory: null, selectedStoryLoading: true};
+    }
+
+    case StoryActions.types.loadStoryFail: {
+      return {...state, selectedStoryLoading: false};
+    }
+
+    case StoryActions.types.loadStorySuccess: {
+      return {...state, selectedStory: action.payload, selectedStoryLoading: false};
     }
 
     case StoryActions.types.updateStorySuccess: {

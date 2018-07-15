@@ -6,7 +6,6 @@ import { Action } from '@ngrx/store';
 import { PhotoActions } from './photo.actions';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { config } from '../../../config';
-import { Story } from '../../../shared/models/story.model';
 import { of } from 'rxjs/observable/of';
 import { Photo } from '../../../shared/models/photo.model';
 import { MatSnackBar } from '@angular/material';
@@ -29,11 +28,12 @@ export class PhotoEffects {
         } else if (payload.length > 2) {
           return of(new PhotoActions.ComparePhotosFail({type: ComparePhotosFailType.tooManyPhotos}));
         } else {
-          return this.http.post(config.endpoints.comparePhotos, {
-            originalImageId: payload[0].id,
-            modifiedImageId: payload[1].id,
-            resize: false,
-            boundingRectangles: false
+          const tmpUrl = config.endpoints.comparePhotos.replace(':firstId', payload[0].id.toString());
+          const url = tmpUrl.replace(':secondId', payload[1].id.toString());
+          return this.http.get(url, {
+            params: {
+              sensitivity: '200'
+            }
           })
             .pipe(
               map((res: any) => new PhotoActions.ComparePhotosSuccess(Photo.deserialize(res))),
@@ -75,12 +75,21 @@ export class PhotoEffects {
     .pipe(
       map((action: PhotoActions.CreatePhoto) => action.payload),
       switchMap((payload: PhotoActionPayload) => {
-        this.snackbar.open('Uploading photo', 'OK');
-        return this.http.post(config.endpoints.createPhoto.replace(':storyNumber', `${payload.story.id}`), payload.photo)
+        return this.http.post(config.endpoints.createPhoto.replace(':storyId', `${payload.story.id}`), payload.photo)
           .pipe(
             map((res: any) => new PhotoActions.CreatePhotoSuccess({id: res.id, photo: payload.photo})),
             catchError((err: HttpErrorResponse) => of(new PhotoActions.CreatePhotoFail(err)))
           );
+      })
+    );
+
+  @Effect()
+  createPhotoSuccess$: Observable<Action> = this.actions$
+    .ofType(PhotoActions.types.createPhotoSuccess)
+    .pipe(
+      switchMap(() => {
+        this.snackbar.open('Photo uploaded successfully', 'OK', {duration: 2000});
+        return new EmptyObservable();
       })
     );
 
@@ -90,28 +99,12 @@ export class PhotoEffects {
     .pipe(
       map((action: PhotoActions.DeletePhoto) => action.payload),
       switchMap((payload: PhotoActionPayload) => {
-        const tmpUrl = config.endpoints.deletePhoto.replace(':storyNumber', `${payload.story.id}`);
-        const url = tmpUrl.replace(':photoNumber', `${payload.photo.id}`);
+        const tmpUrl = config.endpoints.deletePhoto.replace(':storyId', `${payload.story.id}`);
+        const url = tmpUrl.replace(':photoId', `${payload.photo.id}`);
         return this.http.delete(url)
           .pipe(
             map((res: any) => new PhotoActions.DeletePhotoSuccess(payload.photo)),
             catchError((err: HttpErrorResponse) => of(new PhotoActions.DeletePhotoFail(err)))
-          );
-      })
-    );
-
-  @Effect()
-  loadPhotoList$: Observable<Action> = this.actions$
-    .ofType(PhotoActions.types.loadPhotoList)
-    .pipe(
-      map((action: PhotoActions.LoadPhotoList) => action.payload),
-      switchMap((payload: Story) => {
-        return this.http.get(config.endpoints.loadPhotoList.replace(':storyNumber', `${payload.id}`))
-          .pipe(
-            map((res: any) => new PhotoActions.LoadPhotoListSuccess(res.photos.map(data => {
-              return Photo.deserialize(data);
-            }))),
-            catchError((err: HttpErrorResponse) => of(new PhotoActions.LoadPhotoListFail(err)))
           );
       })
     );
@@ -122,8 +115,8 @@ export class PhotoEffects {
     .pipe(
       map((action: PhotoActions.UpdatePhoto) => action.payload),
       switchMap((payload: PhotoActionPayload) => {
-        const tmpUrl = config.endpoints.updatePhoto.replace(':storyNumber', `${payload.story.id}`);
-        const url = tmpUrl.replace(':photoNumber', `${payload.photo.id}`);
+        const tmpUrl = config.endpoints.updatePhoto.replace(':storyId', `${payload.story.id}`);
+        const url = tmpUrl.replace(':photoId', `${payload.photo.id}`);
         return this.http.put(url, payload.photo)
           .pipe(
             map((res: any) => new PhotoActions.UpdatePhotoSuccess(payload.photo)),

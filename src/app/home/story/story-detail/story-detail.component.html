@@ -1,12 +1,12 @@
-<mat-card *ngIf="story">
+<mat-card>
   <mat-card-title>
     <span>Story details</span><span *ngIf="editing" class="editing-mode"> - editing</span>
     <div class="edit-btn">
       <button mat-raised-button (click)="toggleEdit()">EDIT</button>
     </div>
   </mat-card-title>
-  <mat-card-content>
-    <cs-story-form
+  <mat-card-content *ngIf="!(storyLoading | async); else spinner">
+    <cs-story-form *ngIf="story"
       [editing]="editing"
       [story]="story"
       (formValueChange)="onFormValueChange($event)">
@@ -17,7 +17,8 @@
     </div>
     <div class="row">
       <div class="col-md-3 photo-list">
-        <cs-photo-list [photos]="(photos | async)"
+        <cs-photo-list *ngIf="!(photosLoading | async); else spinner"
+                       [photos]="(photos | async)"
                        [photosLoading]="(photosLoading | async)"
                        (deletePhoto)="onDeletePhoto($event)"
                        (photoToCompare)="onPhotoToCompare($event)"
@@ -31,3 +32,6 @@
     </div>
   </mat-card-content>
 </mat-card>
+<ng-template #spinner>
+  <mat-spinner mode="indeterminate"></mat-spinner>
+</ng-template>

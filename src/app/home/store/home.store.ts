@@ -65,7 +65,17 @@ export const getStoryList = createSelector(
   state => state.storyList
 );
 
+export const getStoryListLoading = createSelector(
+  getStoryState,
+  state => state.storyListLoading
+);
+
 export const getSelectedStory = createSelector(
   getStoryState,
   state => state.selectedStory
+);
+
+export const getSelectedStoryLoading = createSelector(
+  getStoryState,
+  state => state.selectedStoryLoading
 );

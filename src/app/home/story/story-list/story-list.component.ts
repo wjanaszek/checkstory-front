@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { getStoryList, State } from '../../store/home.store';
+import { getStoryList, getStoryListLoading, State } from '../../store/home.store';
 import { Story } from '../../../shared/models/story.model';
 import { Observable } from 'rxjs/Observable';
 import { StoryActions } from '../../store/story/story.actions';
@@ -8,8 +8,7 @@ import { Router } from '@angular/router';
 import { MatDialog } from '@angular/material';
 import { StoryDialogComponent } from '../story-dialog/story-dialog.component';
 import { Subject } from 'rxjs/Subject';
-import { takeUntil } from 'rxjs/operators';
-import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-dialog.component';
+import { ConfirmDialogComponent } from '../../../shared/components/confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'cs-story-list',
@@ -19,7 +18,8 @@ import { ConfirmDialogComponent } from '../../../shared/confirm-dialog/confirm-d
 export class StoryListComponent implements OnInit, OnDestroy {
 
   menuStory: Story;
-  stories: Observable<Story[]>;
+  storyList: Observable<Story[]>;
+  storyListLoading: Observable<boolean>;
 
   private ngUnsubscribe: Subject<void> = new Subject<void>();
 
@@ -27,7 +27,8 @@ export class StoryListComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.stories = this.store.select(getStoryList);
+    this.storyList = this.store.select(getStoryList);
+    this.storyListLoading = this.store.select(getStoryListLoading);
   }
 
   ngOnDestroy(): void {
@@ -40,13 +41,9 @@ export class StoryListComponent implements OnInit, OnDestroy {
       disableClose: true
     });
 
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.ngUnsubscribe)
-      )
-      .subscribe(data => {
-        this.store.dispatch(new StoryActions.CreateStory(data));
-      });
+    dialogRef.afterClosed().subscribe(data => {
+      this.store.dispatch(new StoryActions.CreateStory(data));
+    });
   }
 
   delete(story: Story): void {
@@ -58,26 +55,19 @@ export class StoryListComponent implements OnInit, OnDestroy {
       }
     });
 
-    dialogRef.afterClosed()
-      .pipe(
-        takeUntil(this.ngUnsubscribe)
-      )
-      .subscribe(data => {
-        if (data) {
-          this.store.dispatch(new StoryActions.DeleteStory(story));
-        }
-      });
+    dialogRef.afterClosed().subscribe(data => {
+      if (data) {
+        this.store.dispatch(new StoryActions.DeleteStory(story));
+      }
+    });
   }
 
   details(story: Story): void {
-    this.store.dispatch(new StoryActions.LoadSelectedStory(story));
     this.router.navigateByUrl('home/story/:id'.replace(':id', `${story.id}`));
   }
 
   edit(story: Story): void {
-    // @TODO pass editing value with URL
-    this.store.dispatch(new StoryActions.LoadSelectedStory(story));
-    this.router.navigateByUrl('home/story/:id&edit'.replace(':id', `${story.id}`));
+    this.router.navigate(['home/story/:id'.replace(':id', `${story.id}`)], {queryParams: {edit: true}});
   }
 
   menuButtonClicked(story: Story, event): void {
